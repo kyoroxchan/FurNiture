@@ -9,24 +9,6 @@ body {
 }
 
 
-
-/* header------------------------------------------------------------------------------------------- */
-header {
-    height: 15vh;
-    border-bottom: solid 1px black;
-}
-
-header p {
-    line-height: 15vh;
-    font-size: 7vh;
-    margin-left: 2vw;
-}
-
-header p a {
-    text-decoration: none;
-    color: black;
-}
-
 /* main------------------------------------------------------------------------------------------ */
 
 main {

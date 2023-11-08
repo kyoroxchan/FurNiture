@@ -10,55 +10,6 @@ body {
 
 
 
-/* header------------------------------------------------------------------------------------------- */
-header {
-    height: 15vh;
-    border-bottom: solid 1px black;
-    display: flex;
-    justify-content: space-between;
-}
-
-header p {
-    line-height: 15vh;
-    font-size: 7vh;
-    margin-left: 2vw;
-}
-
-header p a {
-    text-decoration: none;
-    color: black;
-}
-
-
-.nav {
-    margin-right: 8.5vh;
-    margin-top: 6vh;
-}
-
-.nav p {
-    border: 1px solid black;
-    height: 8vh;
-    width: 8vh;
-    border-radius: 50px;
-    overflow: hidden;
-}
-
-.nav p a {
-    height: 5vh;
-    width: 5vh;
-}
-
-.nav p a img {
-    height: 8vh;
-    width: 8vh;
-    border-radius: 50px;
-    transition: .3s;
-}
-
-.nav p a:hover img {
-    transform: scale(120%);
-}
-
 
 /* main------------------------------------------------------------------------------------------- */
 main {

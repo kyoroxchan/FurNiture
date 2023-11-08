@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FurNiture</title>
+    <link rel="stylesheet" href="../static/css/top.css">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+        <div class="navArea">
+            <div>
+                <form action="#" class="search-form">
+                    <button type="submit" aria-label="検索"></button>
+                    <label>
+                        <input type="text" id="seach" class="seachText" placeholder="キーワードを入力">
+                    </label>
+                </form>
+            </div>
+            <ul class="nav">
+                <li><a href="http://localhost:5000/login">ログイン</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="goodsArea">
+            <ul class="goodsGroup">
+                {% for rec in result %}
+                <li class="goods">
+                    <a href="http://localhost:5000/detail/{{ rec['gid']}}">
+                        <div class="image">
+                            <img src="/static/images/{{rec['photo']}}" alt="">
+                            <p class="price">{{ rec["price"]}}</p>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+</body>
+
+</html>

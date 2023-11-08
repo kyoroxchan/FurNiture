@@ -1,0 +1,250 @@
+* {
+    margin: 0;
+    padding: 0;
+    --hover-clr: #6d6d6d;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+
+
+/* header------------------------------------------------------------------------------------------- */
+header {
+    height: 8vh;
+    border-bottom: solid 1px black;
+    display: flex;
+    justify-content: space-between;
+}
+
+header p {
+    line-height: 8vh;
+    font-size: 7vh;
+    margin-left: 2vw;
+}
+
+header p a {
+    text-decoration: none;
+    color: black;
+}
+
+.navArea {
+    height: 5vh;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2vw;
+}
+
+.nav {
+    margin-right: 2vh;
+    margin-top: -2vh;
+}
+
+.nav p {
+    border: 1px solid black;
+    height: 8vh;
+    width: 8vh;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.logoutArea {
+    margin-right: 2vh;
+}
+
+.logoutBtn {
+    display: inline-block;
+    font-size: 3vh;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    height: 5vh;
+    background: red;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    margin-top: 1.5vh;
+    border: 2px solid red;
+    text-decoration: none;
+    line-height: 5vh;
+}
+
+.logoutBtn:hover {
+    color: red;
+    background: #ffffff;
+}
+
+/* main------------------------------------------------------------------------------------------- */
+
+.user {
+    display: flex;
+    width: 100vw;
+    height: 30vh;
+    padding-top: 5vh;
+}
+
+.left {
+    display: flex;
+    width: 55vw;
+    justify-content: right;
+}
+
+.left .imgArea {
+    height: 25vh;
+    width: 25vh;
+}
+
+.left .imgArea img {
+    height: 25vh;
+    width: 25vh;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.userDetail {
+    margin-left: 5vh;
+    width: 50vh;
+}
+
+.userDetail h1 {
+    font-size: 2em;
+}
+
+.userDetail p {
+    margin-top: 1vh;
+    font-size: 1.2em;
+    height: 18vh;
+    overflow-y: scroll;
+}
+
+.right {
+    margin: 1vh auto;
+}
+
+.button {
+    display: inline-block;
+    font-size: 3vh;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    height: 5vh;
+    padding: 8px 33px;
+    background: #3400c9;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    border: 2px solid #3400c9;
+    margin-top: 5vh;
+    text-decoration: none;
+    line-height: 5vh;
+}
+
+.button:hover {
+    color: #3400c9;
+    background: #ffffff;
+}
+
+.btnArea {
+    list-style: none;
+    display: flex;
+    height: 8vh;
+    width: 100vw;
+    justify-content: center;
+}
+
+.btnArea li {
+    width: calc(33.33%);
+    text-align: center;
+    border-bottom: 1px solid black;
+    border-right: .5px solid black;
+    border-left: .5px solid black;
+}
+
+.btnArea li a {
+    height: 100%;
+    width: 100%;
+    display: block;
+    font-size: 2em;
+    text-decoration: none;
+    line-height: 5vh;
+    transition: .3s;
+    color: #000;
+}
+
+.btnArea li a span {
+    font-size: 1.3rem;
+    line-height: 2vh;
+    display: block;
+}
+
+.btnArea li a:hover {
+    font-size: 2.3em;
+}
+
+
+/* goods------------------------------------------------------------------------------------------- */
+
+
+.goodsGroup {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+    margin: 0 auto;
+    margin-top: 3vh;
+    justify-content: center;
+}
+
+.goodsGroup .goods {
+    list-style: none;
+    height: 35vh;
+    width: 35vh;
+    margin: 3vh;
+    overflow: hidden;
+}
+
+.goods {
+    box-shadow: 0 0 10px black;
+}
+
+.goods .a {
+    height: 100%;
+    width: 100%;
+}
+
+.goods .image {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.goods .image img {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+.goods .image {
+    position: relative;
+}
+
+.goods .price {
+    z-index: 5;
+    background: rgba(52.26, 0, 201.01, 0.76);
+    width: 13vh;
+    height: 5vh;
+    position: absolute;
+    bottom: 2%;
+    right: 0;
+    padding-right: .5em;
+    text-align: right;
+    line-height: 5vh;
+    font-size: 2em;
+    border-radius: 20px 0 0 20px;
+    color: white;
+    box-shadow: 0 0 10px black;
+}

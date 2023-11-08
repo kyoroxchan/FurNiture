@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録内容確認</title>
+    <link rel="stylesheet" href="/static/css/check.css">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+    <main>
+        <h1>以下の内容で登録します</h1>
+        <ul>
+            <li>
+                <p class="itemName">メールアドレス:</p>
+                <p class="item">{{result["mail"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">ニックネーム:</p>
+                <p class="item">{{result["nick"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">氏名:</p>
+                <p class="item">{{result["sei"]}} {{result["mei"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">シメイ:</p>
+                <p class="item">{{result["sei2"]}} {{result["mei2"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">性別:</p>
+                <p class="item">{{result["sex"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">郵便番号:</p>
+                <p class="item">{{result["post"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">都道府県:</p>
+                <p class="item">{{result["pref"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">住所:</p>
+                <p class="item">{{result["addr"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">番地:</p>
+                <p class="item">{{result["home"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">建物名:</p>
+                <p class="item">{{result["bname"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">お知らせを受け取る:</p>
+                <p class="item">{{result["news"]}}</p>
+            </li>
+        </ul>
+        <div class="btnArea">
+            <form action="/checkMail" method="post">
+                <input type="submit" value="登録" class="button">
+            </form>
+            <form action="/MRegister">
+                <input type="submit" value="修正" class="button2">
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

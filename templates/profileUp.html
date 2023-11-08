@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>プロフィール編集</title>
+    <link rel="stylesheet" href="/static/css/profileUp.css">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+    <main>
+        <form action="/profile" class="wrapper" method="post">
+            <h1>プロフィール編集</h1>
+            <div class="first">
+                <p class="textArea">
+                    <label>プロフィール画像</label><br>
+                    <input type="text" name="icon" class="textbox" value="{{res.icon}}">
+                <p class="textArea">
+                    <label>ニックネーム</label>
+                    <input type="text" name="nick" class="textbox" maxlength="8" value="{{res.nickname}}">
+                </p>
+                <p class="textArea">
+                    <label>自己紹介</label><br>
+                    <textarea name="profile" class="textbox pro" maxlength="250">{{res.profile}}</textarea>
+                <p class="box">
+                    <input type="submit" value="変更" class="button">
+                </p>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

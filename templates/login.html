@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン</title>
+    <link rel="stylesheet" href="../static/css/login.css">
+</head>
+
+<body>
+
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+
+    <main>
+        <form action="/loginCheck" class="wrapper" method="post">
+            <h1>ログイン</h1>
+            <div class="first">
+                <p class="textArea">
+                    <label>メールアドレス</label>
+                    <a href="http://localhost:5000/MRegister" class="new">新規登録はこちら</a><br>
+                    <input type="email" name="mail" class="textbox" required>
+                </p>
+                <p class="textArea">
+                    <label>パスワード</label><br>
+                    <input type="password" name="pass" class="textbox" required>
+                <p class="box">
+                    <input type="submit" value="ログイン" class="button">
+                </p>
+                <div class="down">
+                    <p><a href="#">パスワードを忘れた場合はこちら</a>&raquo;&nbsp;</p>
+                </div>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

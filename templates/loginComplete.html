@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ログイン完了</title>
+    <link rel="stylesheet" href="/static/css/loginComplete.css">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+
+    <main>
+        <p><img src="/static/images/{{icon}}" alt=""></p>
+        <h1>ログイン認証に成功しました</h1>
+        <p><span>{{nickname}}</span>さんようこそ</p>
+        <form action="/" method="get">
+            <input type="submit" value="TOPへ戻る" class="button">
+        </form>
+    </main>
+</body>
+
+</html>

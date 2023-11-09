@@ -228,3 +228,10 @@ select {
     width: 20vw;
     height: 4vh;
 }
+
+.err{
+    margin-top: 1vh;
+    float: right;
+    font-size: 2vh;
+    color: red;
+}

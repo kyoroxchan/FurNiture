@@ -19,29 +19,31 @@
         <form action="/check" class="wrapper" method="post">
             <h1>会員登録</h1>
             <div class="first">
-                <p class="textArea">
-                    <label>メールアドレス</label><br>
+                <div class="textArea">
+                    <label>メールアドレス</label>
+                    <label class="err">{{err.mail}}</label><br>
                     <input type="email" name="mail" class="textbox" value={{result.mail}}>
-                </p>
-                <p class="textArea">
-                    <label>パスワード</label><br>
+                </div>
+                <div class="textArea">
+                    <label>パスワード</label>
+                    <label class="err">{{err.pas}}</label><br>
                     <input type="password" name="pass" class="textbox">
-                </p>
-                <p class="textArea">
+                </div>
+                <div class="textArea">
                     <label>パスワード(確認用)</label><br>
                     <input type="password" name="check" class="textbox">
-                </p>
+                </div>
                 <p class="box text">利用規約およびプライバシーポリシーに同意の上、ログインへお進みください。<br>
                     このサイトはreCAPTCHAで保護されており、Googleのプライバシーポリシーと利用規約が適用されます。</p>
                 <p class="box">
                     <a href="#" class="next">次へ</a>
                 </p>
                 <div class="down">
-                    <p>
+                    <div>
                         <input type="checkbox" id="news" name="news" class="cbox" value="受け取る">
                         <input type="hidden" name="news" value="受け取らない">
                         <label for="news">お知らせを受け取る</label>
-                    </p>
+                    </div>
                     <p><a href="http://localhost:5000/login">アカウントをお持ちの場合はこちら</a>&raquo;&nbsp;</p>
                 </div>
             </div>
@@ -50,24 +52,30 @@
             <div class="second">
                 <div class="dateArea">
                     <p class="backArea"><a href="#" class="back">前へ</a></p>
-                    <p class="textArea oneArea">
-                        <label>ニックネーム</label><br>
+                    <div class="textArea oneArea">
+                        <label>ニックネーム</label>
+                        <label class="err">{{err.nick}}</label><br>
                         <input type="text" name="nick" class="textbox" maxlength="8" value={{result.nick}}>
-                    </p>
-                    <p class="textArea">
-                        <label>姓</label><br>
+                    </div>
+                    <div class="textArea">
+                        <label>姓</label>
+                        <label class="err">{{err.sei}}</label><br>
                         <input type="text" name="sei" class="textbox" maxlength="8" value={{result.sei}}>
-                        <label>セイ</label><br>
+                        <label>セイ</label>
+                        <label class="err">{{err.sei2}}</label><br>
                         <input type="text" name="sei2" class="textbox" maxlength="16" value={{result.sei2}}>
-                    </p>
-                    <p class="textArea">
-                        <label>名</label><br>
+                    </div>
+                    <div class="textArea">
+                        <label>名</label>
+                        <label class="err">{{err.mei}}</label><br>
                         <input type="text" name="mei" class="textbox" maxlength="8" value={{result.mei}}>
-                        <label>メイ</label><br>
+                        <label>メイ</label>
+                        <label class="err">{{err.mei2}}</label><br>
                         <input type="text" name="mei2" class="textbox" maxlength="16" value={{result.mei2}}>
-                    </p>
-                    <p class="textArea">
-                        <label>郵便番号</label><br>
+                    </div>
+                    <div class="textArea">
+                        <label>郵便番号</label>
+                        <label class="err">{{err.post}}</label><br>
                         <input type="text" name="post" class="textbox" maxlength="7" value={{result.post}}>
                         <label>都道府県</label>
                         <select name="pref" value={{result.pref}}>
@@ -119,23 +127,27 @@
                             <option value="鹿児島県">鹿児島県</option>
                             <option value="沖縄県">沖縄県</option>
                         </select>
-                        <label>番地</label><br>
+                        <label>番地</label>
+                        <label class="err">{{err.home}}</label><br>
                         <input type="text" name="home" class="textbox" maxlength="10" value={{result.home}}>
-                    </p>
-                    <p class="textArea">
-                        <label>電話番号</label><br>
+                    </div>
+                    <div class="textArea">
+                        <label>電話番号</label>
+                        <label class="err">{{err.phone}}</label><br>
                         <input type="tel" name="phone" class="textbox" maxlength="11" value={{result.phone}}>
-                        <label>住所</label><br>
+                        <label>住所</label>
+                        <label class="err">{{err.addr}}</label><br>
                         <input type="text" name="addr" class="textbox" maxlength="50" value={{result.addr}}>
-                        <label>建物名</label><br>
+                        <label>建物名</label>
+                        <label class="err">{{err.bname}}</label><br>
                         <input type="text" name="bname" class="textbox" maxlength="50" value={{result.bname}}>
-                    </p>
-                    <p class="textArea sex">
+                    </div>
+                    <div class="textArea sex">
                         <label><input type="radio" name="sex" value="男">
                             男</label>
                         <label><input type="radio" name="sex" value="女">
                             女</label>
-                    </p>
+                    </div>
                 </div>
                 <p class="box">
                     <input type="submit" value="登録" class="button">

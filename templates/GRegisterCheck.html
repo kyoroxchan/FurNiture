@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="jp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録内容確認</title>
+    <link rel="stylesheet" href="/static/css/check.css">
+    <link rel="stylesheet" href="/static/css/navLogin.css">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+        <div class="nav">
+            <p><a href="http://localhost:5000/user"><img src="/static/images/icon/{{res.icon}}" alt=""></a></p>
+        </div>
+    </header>
+    <main>
+        <h1>以下の内容で登録します</h1>
+        <ul>
+            <li>
+                <p class="itemName">商品名:</p>
+                <p class="item">{{result["name"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">商品画像:</p>
+                <p class="item">{{result["file"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">値段:</p>
+                <p class="item">{{result["price"]}}</p>
+            </li>
+            <hr>
+            <li>
+                <p class="itemName">商品説明:</p>
+                <p class="item">{{result["info"]}}</p>
+            </li>
+        </ul>
+        <div class="btnArea">
+            <form action="/GRegisterComplete" method="post">
+                <input type="submit" value="登録" class="button">
+            </form>
+            <form action="/GRegister">
+                <input type="submit" value="修正" class="button2">
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

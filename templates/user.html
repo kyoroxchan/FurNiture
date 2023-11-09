@@ -19,7 +19,7 @@
     <main>
         <div class="user">
             <div class="left">
-                <p class="imgArea"><img src="/static/images/{{res.icon}}" alt=""></p>
+                <p class="imgArea"><img src="/static/images/icon/{{res.icon}}" alt=""></p>
                 <div class="userDetail">
                     <h1>{{res.nickname}}</h1>
                     <p>{{res.profile}}</p>
@@ -28,7 +28,7 @@
             <div class="right">
                 
                 <a class="button" href="http://localhost:5000/profileUp">プロフィール編集</a>
-                <a class="button" href="">出品する</a>
+                <a class="button" href="http://localhost:5000/GRegister">出品する</a>
             </div>
         </div>
         <ul class="btnArea">
@@ -42,7 +42,7 @@
                 <li class="goods">
                     <a href="http://localhost:5000/detail/{{ rec['gid']}}">
                         <div class="image">
-                            <img src="/static/images/{{rec['photo']}}" alt="">
+                            <img src="/static/images/goods/{{rec['photo']}}" alt="">
                             <p class="price">{{ rec["price"]}}</p>
                         </div>
                     </a>

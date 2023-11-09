@@ -14,12 +14,12 @@
         <p><a href="http://localhost:5000">FurNiture</a></p>
     </header>
     <main>
-        <form action="/profile" class="wrapper" method="post">
+        <form action="/profile" class="wrapper" method="post" enctype="multipart/form-data">
             <h1>プロフィール編集</h1>
             <div class="first">
                 <p class="textArea">
                     <label>プロフィール画像</label><br>
-                    <input type="text" name="icon" class="textbox" value="{{res.icon}}">
+                    <input type="file" name="file">
                 <p class="textArea">
                     <label>ニックネーム</label>
                     <input type="text" name="nick" class="textbox" maxlength="8" value="{{res.nickname}}">

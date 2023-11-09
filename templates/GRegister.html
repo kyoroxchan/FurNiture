@@ -13,9 +13,32 @@
     <header>
         <p><a href="http://localhost:5000">FurNiture</a></p>
         <div class="nav">
-            <p><a href="http://localhost:5000/user"><img src="/static/images/{{res.icon}}" alt=""></a></p>
+            <p><a href="http://localhost:5000/user"><img src="/static/images/icon/{{res.icon}}" alt=""></a></p>
         </div>
     </header>
+
+    <form action="/GRegisterCheck" class="wrapper" method="post" enctype="multipart/form-data">
+        <h1>商品登録</h1>
+        <div class="first">
+            <p class="textArea">
+                <label>商品名</label>
+                <input type="text" name="name" class="textbox" maxlength="50" value="{{res.name}}">
+            </p>
+            <p class="textArea">
+                <label>商品画像</label><br>
+                <input type="file" name="file">
+            <p class="textArea">
+                <label>値段</label>
+                <input type="number" name="price" class="textbox" maxlength="8" value="{{res.price}}">
+            </p>
+            <p class="textArea">
+                <label>商品説明</label><br>
+                <textarea name="info" class="textbox pro" maxlength="200">{{res.info}}</textarea>
+            <p class="box">
+                <input type="submit" value="確認" class="button">
+            </p>
+        </div>
+    </form>
 </body>
 
 </html>

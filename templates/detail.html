@@ -32,7 +32,7 @@
             {% for rec in result %}
             <div class="leftArea">
                 <p>
-                    <img src="/static/images/{{rec['photo']}}" alt="">
+                    <img src="/static/images/goods/{{rec['photo']}}" alt="">
                 </p>
             </div>
             <div class="rightArea">
@@ -42,6 +42,15 @@
                     </div>
                     <h2>{{ rec["price"]}}円</h2>
                     <p class="info">{{ rec["info"]}}</p>
+                    <div class="sellerArea">
+                        <p class="seller"><a href="http://localhost:5000/user">
+                            <img src="/static/images/icon/20231109_122919_aaaa.png" alt=""></a>
+                        </p>
+                        <div class="sellerUser">
+                            <p>出品者</p>
+                            <p>no name</p>
+                        </div>
+                    </div>
                     <p class="nextArea"><a href="" class="next">購入</a></p>
                 </div>
             </div>

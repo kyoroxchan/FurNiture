@@ -12,9 +12,6 @@
 <body>
     <header>
         <p><a href="http://localhost:5000">FurNiture</a></p>
-        <div class="nav">
-            <p><a href="http://localhost:5000/user"><img src="/static/images/icon/{{res.icon}}" alt=""></a></p>
-        </div>
     </header>
     <main>
         <h1>以下の内容で登録します</h1>
@@ -26,7 +23,7 @@
             <hr>
             <li>
                 <p class="itemName">商品画像:</p>
-                <p class="item">{{result["file"]}}</p>
+                <p class="item">{{images}}</p>
             </li>
             <hr>
             <li>

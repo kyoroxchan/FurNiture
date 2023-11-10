@@ -9,7 +9,11 @@ body {
 }
 
 
-
+/* main------------------------------------------------------------------------------------------- */
+.wrapper {
+    display: flex;
+    height: 85vh;
+}
 
 /* leftArea------------------------------------------------------------------------------------------- */
 
@@ -58,7 +62,7 @@ body {
 .nameArea {
     position: relative;
     width: 75%;
-    height: 7vh;
+    height: 3vh;
     margin: 10vh auto -.2em auto;
 }
 
@@ -93,7 +97,7 @@ body {
     width: 60%;
     height: 8vh;
     margin: 0 auto;
-    margin-top: 5vh;
+    margin-top: 2vh;
 }
 
 .next {
@@ -115,4 +119,38 @@ body {
 .next:hover {
     color: #3400c9;
     background: #ffffff;
+}
+
+.sellerArea{
+    width: 60%;
+    height: 8vh;
+    margin: 0 auto;
+    margin-top: 2vh;
+    background-color: red;
+    display: flex;
+}
+.seller{
+    height: 7vh;
+    width: 7vh;
+    border-radius: 50px;
+    overflow: hidden;
+    padding: .5vh;
+    }
+.seller a{
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: relative;
+}
+.seller a img{
+    border: 1px solid black;
+    height: 7vh;
+    width: 7vh;
+    border-radius: 50px;
+    transition: .3s;
+    position: absolute;
+}
+.sellerUser{
+    padding-left: 2vh;
+    margin: auto 0;
 }

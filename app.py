@@ -9,7 +9,7 @@ import os
 app = Flask(__name__)
 app.secret_key = "心がカギ"
 app.permanent_session_lifetime = timedelta(minutes=30)
-app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024
+app.config["MAX_CONTENT_LENGTH"] = 8**20
 
 # TOP-------------------------------------------------------------------------------------------
 
@@ -19,6 +19,10 @@ def top():
     sql = "SELECT * FROM goods;"
 
     result = select(sql)
+    session.pop("name", None)
+    session.pop("file", None)
+    session.pop("price", None)
+    session.pop("info", None)
 
     if "nickname" in session:
         res = {"icon": session["icon"]}
@@ -32,7 +36,9 @@ def top():
 
 @app.route("/login", methods=["GET"])
 def login():
-    return render_template("login.html")
+    errmsg = {}
+    test = {}
+    return render_template("login.html", errmsg=errmsg, test=test)
 
 
 @app.route("/loginCheck", methods=["POST"])
@@ -45,10 +51,13 @@ def loginCheck():
         + test["mail"]
         + '";'
     )
-
+    err = ""
     print(sql)
-
     result = select(sql)
+    if not result:
+        err = "メールアドレスまたはパスワードが違います"
+        return render_template("login.html", err=err, test=test)
+
     print(result[0])
 
     for rec in result:
@@ -58,7 +67,8 @@ def loginCheck():
         icon = rec["icon"]
 
     if not test["pass"] == rec["pass"]:
-        return render_template("login.html", result=result)
+        err = "メールアドレスまたはパスワードが違います"
+        return render_template("login.html", result=result, err=err, test=test)
 
     session["nickname"] = nickname
     session["icon"] = icon
@@ -134,7 +144,6 @@ def check():
 def checkMail():
     result = session.copy()
 
-
     try:
         con = con_db()
         cur = con.cursor(dictionary=True)
@@ -190,7 +199,7 @@ def checkMail():
 
 @app.route("/user", methods=["GET"])
 def user():
-    sql = "SELECT * FROM goods;"
+    sql = 'SELECT * FROM goods WHERE mail ="' + session["mail"] + '";'
 
     result = select(sql)
 
@@ -306,7 +315,15 @@ def GRegister():
     err = {}
     result = session.copy()
 
-    return render_template("GRegister.html", res=res, result=result, err=err)
+    if "file" in session:
+        directory_path = "static/images/goods/"
+        file_name = session["file"]
+        file_path = os.path.join(directory_path, file_name)
+        os.remove(file_path)
+        session.pop("file", None)
+        return render_template("GRegister.html", res=res, result=result, err=err)
+    else:
+        return render_template("GRegister.html", res=res, result=result, err=err)
 
 
 @app.route("/GRegisterCheck", methods=["POST"])
@@ -322,6 +339,26 @@ def GRegisterCheck():
     result = request.form
 
     err = {}
+    # ***ファイルオブジェクト取得***
+    file = request.files["file"]
+
+    filename = file.filename
+    # ***ファイル受信チェック***
+    if filename:
+        # ***ファイルオープン***
+        img = Image.open(file)
+        # ***日時情報の取得***
+        savedate = datetime.now().strftime("%Y%m%d_%H%M%S_")
+        # ***安全なファイル名に変換***
+        filename = savedate + secure_filename(filename)
+        # ***保存用フルパス作成***
+        os.path.join("./static/images/goods", filename)
+        save_path = os.path.join("./static/images/goods/", filename)
+        # ***ファイル保存***
+        img.save(save_path, quality=90)
+        images = filename
+    else:
+        images = "unknownGoods.jpeg"
 
     for key, value in result.items():
         if not value:
@@ -331,52 +368,45 @@ def GRegisterCheck():
             err[key] = ""
 
     if not err_count == 0:
-        return render_template("GRegister.html", result=result, err=err,res=res)
-    
-    for key, value in result.items():
-        session[key] = value
+        return render_template("GRegister.html", result=result, err=err, res=res)
 
-    return render_template("GRegisterCheck.html", result=result, vtbl=vtbl, res=res)
+    session["name"] = result["name"]
+    session["file"] = images
+    session["price"] = result["price"]
+    session["info"] = result["info"]
+
+    return render_template(
+        "GRegisterCheck.html", result=result, vtbl=vtbl, res=res, images=images
+    )
+
 
 @app.route("/GRegisterComplete", methods=["POST"])
 def GRegisterComplete():
+    res = {
+        "nickname": session["nickname"],
+        "icon": session["icon"],
+        "profile": session["profile"],
+        "mail": session["mail"],
+    }
 
     result = session.copy()
-
-    # ***ファイルオブジェクト取得***
-    file = request.files["file"]
-
-    filename = file.filename
-    # ***ファイル受信チェック***
-    if not filename:
-        return render_template("profileUp.html")
-    # ***ファイルオープン***
-    img = Image.open(file)
-    # ***日時情報の取得***
-    savedate = datetime.now().strftime("%Y%m%d_%H%M%S_")
-    # ***安全なファイル名に変換***
-    filename = savedate + secure_filename(filename)
-    # ***保存用フルパス作成***
-    os.path.join("./static/images/icon", filename)
-    save_path = os.path.join("./static/images/icon", filename)
-    # ***ファイル保存***
-    img.save(save_path, quality=90)
 
     try:
         con = con_db()
         cur = con.cursor(dictionary=True)
         sql = """
     INSERT INTO goods 
-        (name,photo,price,info)
+        (name,photo,price,info,mail)
     VALUES 
-        (%s, %s, %s, %s)
+        (%s, %s, %s, %s, %s)
     """
         data = [
             (
                 result["name"],
-                filename,
+                result["file"],
                 result["price"],
                 result["info"],
+                session["mail"],
             )
         ]
         cur.executemany(sql, data)
@@ -396,9 +426,12 @@ def GRegisterComplete():
         cur.close()
         con.close()
 
-    session.clear()
+    session.pop("name", None)
+    session.pop("file", None)
+    session.pop("price", None)
+    session.pop("info", None)
 
-    return render_template("GRegisterComplete.html", result=result)
+    return render_template("GRegisterComplete.html", result=result, res=res)
 
 
 @app.route("/detail/<gid>", methods=["GET"])
@@ -406,6 +439,7 @@ def detail(gid):
     sql = 'SELECT * FROM goods WHERE GID = "' + gid + '";'
 
     result = select(sql)
+    
 
     if "nickname" in session:
         res = {"nickname": session["nickname"], "icon": session["icon"]}
@@ -444,5 +478,12 @@ def select(sql):
     return result
 
 
+@app.errorhandler(413)
+def error413(error):
+    errmsg = {"code": error.code, "msg": "アカウント名またはパスワードが違います"}
+    return render_template("login.html", errmsg=errmsg), 413
+
+
 if __name__ == "__main__":
     app.run(host="localhost", port=5000, debug=True)
+    # app.run(host="localhost", port=5000)

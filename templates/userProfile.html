@@ -4,34 +4,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=], initial-scale=1.0">
-    <title>{{res.nickname}}のマイページ</title>
+    {% for res in result %}
+    <title>{{res.nick}}のページ</title>
+    {% endfor %}
     <link rel="stylesheet" href="../static/css/user.css">
-    <link rel="stylesheet" href="/static/css/navLogin.css">
+    <link rel="stylesheet" href="../static/css/nav.css">
 
 </head>
 
 <body>
     <header>
         <p><a href="http://localhost:5000">FurNiture</a></p>
-        <form action="/logout" method="post" class="logoutArea">
-            <input type="submit" value="ログアウト" class="logoutBtn">
-        </form>
+        <div class="navArea">
+            <div>
+                <form action="#" class="search-form">
+                    <button type="submit" aria-label="検索"></button>
+                    <label>
+                        <input type="text" id="seach" class="seachText" placeholder="キーワードを入力">
+                    </label>
+                </form>
+            </div>
+            <ul class="nav">
+                <li><a href="http://localhost:5000/login">ログイン</a></li>
+            </ul>
+        </div>
     </header>
     <main>
+        {% for res in result %}
         <div class="user">
             <div class="left">
                 <p class="imgArea"><img src="/static/images/icon/{{res.icon}}" alt=""></p>
                 <div class="userDetail">
-                    <h1>{{res.nickname}}</h1>
+                    <h1>{{res.nick}}</h1>
                     <p>{{res.profile}}</p>
                 </div>
             </div>
             <div class="right">
-                
-                <a class="button" href="http://localhost:5000/profileUp">プロフィール編集</a>
-                <a class="button" href="http://localhost:5000/GRegister">出品する</a>
+                <a class="button" href="">フォロー</a>
             </div>
         </div>
+        {% endfor %}
         <ul class="btnArea">
             <li><a href="">10<span>出品</span></a></li>
             <li><a href="">23<span>フォロー</span></a></li>
@@ -39,12 +51,12 @@
         </ul>
         <div class="goodsArea">
             <ul class="goodsGroup">
-                {% for rec in result %}
+                {% for item in goods %}
                 <li class="goods">
-                    <a href="http://localhost:5000/detail/{{ rec['gid']}}">
+                    <a href="http://localhost:5000/detail/{{item['gid']}}">
                         <div class="image">
-                            <img src="/static/images/goods/{{rec['photo']}}" alt="">
-                            <p class="price">{{ rec["price"]}}</p>
+                            <img src="/static/images/goods/{{item['photo']}}" alt="">
+                            <p class="price">{{ item["price"]}}</p>
                         </div>
                     </a>
                 </li>

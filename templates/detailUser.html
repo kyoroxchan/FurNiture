@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商品ページ</title>
-    <link rel="stylesheet" href="../static/css/detailLogin.css">
+    <link rel="stylesheet" href="../static/css/detailUser.css">
     <link rel="stylesheet" href="/static/css/navLogin.css">
 
 </head>
@@ -46,18 +46,21 @@
                     {% endfor %}
                     {% for user in userP %}
                     <div class="sellerArea">
-                        <a href="http://localhost:5000/userProfile/{{ user['mail']}}">
-                            <p class="seller">
-                                <img src="/static/images/icon/{{user['icon']}}" alt="">
-                            </p>
-                            <div class="sellerUser">
-                                <p>出品者</p>
-                                <p>{{user['nick']}}</p>
-                            </div>
-                        </a>
+                        <p class="seller">
+                            <img src="/static/images/icon/{{user['icon']}}" alt="">
+                        </p>
+                        <div class="sellerUser">
+                            <p>出品者</p>
+                            <p>{{user['nick']}}</p>
+                        </div>
                     </div>
                     {% endfor %}
-                    <p class="nextArea"><a href="" class="next">購入</a></p>
+                    <div class="btnArea">
+                        {% for rec in result %}
+                        <p class="nextArea"><a href="http://localhost:5000/goodsEdit" class="next edit">編集</a></p>
+                        <p class="nextArea"><a href="http://localhost:5000/goodsDel" class="next del">削除</a></p>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>

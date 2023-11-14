@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=], initial-scale=1.0">
+    {% for res in result %}
+    <title>{{res.nick}}のページ</title>
+    {% endfor %}
+    <link rel="stylesheet" href="../static/css/user.css">
+    <link rel="stylesheet" href="/static/css/navLogin.css">
+
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+        <div class="navArea">
+            <div>
+                <form action="#" class="search-form">
+                    <button type="submit" aria-label="検索"></button>
+                    <label>
+                        <input type="text" id="seach" class="seachText" placeholder="キーワードを入力">
+                    </label>
+                </form>
+            </div>
+            <div class="nav">
+                <p><a href="http://localhost:5000/user"><img src="/static/images/icon/{{res.icon}}" alt=""></a></p>
+            </div>
+        </div>
+    </header>
+    <main>
+        {% for re in result %}
+        <div class="user">
+            <div class="left">
+                <p class="imgArea"><img src="/static/images/icon/{{re.icon}}" alt=""></p>
+                <div class="userDetail">
+                    <h1>{{re.nick}}</h1>
+                    <p>{{re.profile}}</p>
+                </div>
+            </div>
+            <div class="right">
+                <a class="button" href="">フォロー</a>
+            </div>
+        </div>
+        {% endfor %}
+        <ul class="btnArea">
+            <li><a href="">10<span>出品</span></a></li>
+            <li><a href="">23<span>フォロー</span></a></li>
+            <li><a href="">7<span>フォロワー</span></a></li>
+        </ul>
+        <div class="goodsArea">
+            <ul class="goodsGroup">
+                {% for item in goods %}
+                <li class="goods">
+                    <a href="http://localhost:5000/detail/{{item['gid']}}">
+                        <div class="image">
+                            <img src="/static/images/goods/{{item['photo']}}" alt="">
+                            <p class="price">{{ item["price"]}}</p>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </main>
+</body>
+
+</html>

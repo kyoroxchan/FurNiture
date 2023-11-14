@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品編集</title>
+    <link rel="stylesheet" href="/static/css/profileUp.css">
+    <link rel="stylesheet" href="/static/css/nav.css">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+    <main>
+        <form action="goodsEditComplete" class="wrapper" method="post" enctype="multipart/form-data">
+            <h1>商品編集</h1>
+            <div class="first">
+                {% for rec in result %}
+                <p class="textArea">
+                    <label>商品名</label>
+                    <input type="text" name="name" class="textbox" maxlength="50" value="{{rec.name}}">
+                </p>
+                <p class="textArea">
+                    <label>商品画像</label><br>
+                    <input type="file" name="file">
+                <p class="textArea">
+                    <label>値段</label>
+                    <input type="text" name="price" class="textbox" maxlength="8" value="{{rec.price}}">
+                </p>
+                <p class="textArea">
+                    <label>商品詳細</label><br>
+                    <textarea name="info" class="textbox pro" maxlength="250">{{rec.info}}</textarea>
+                <p class="box">
+                    <input type="submit" value="変更" class="button">
+                </p>
+                {% endfor %}
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FurNiture</title>
+    <title>商品ページ</title>
     <link rel="stylesheet" href="../static/css/detail.css">
     <link rel="stylesheet" href="/static/css/nav.css">
 </head>
@@ -42,18 +42,22 @@
                     </div>
                     <h2>{{ rec["price"]}}円</h2>
                     <p class="info">{{ rec["info"]}}</p>
+                    {% endfor %}
+                    {% for user in userP %}
                     <div class="sellerArea">
-                        <p class="seller"><a href="http://localhost:5000/user">
-                            <img src="/static/images/icon/20231109_122919_aaaa.png" alt=""></a>
-                        </p>
-                        <div class="sellerUser">
-                            <p>出品者</p>
-                            <p>no name</p>
-                        </div>
+                        <a href="http://localhost:5000/userProfile/{{ user['mail']}}">
+                            <p class="seller">
+                                <img src="/static/images/icon/{{user['icon']}}" alt="">
+                            </p>
+                            <div class="sellerUser">
+                                <p>出品者</p>
+                                <p>{{user['nick']}}</p>
+                            </div>
+                        </a>
                     </div>
+                    {% endfor %}
                     <p class="nextArea"><a href="" class="next">購入</a></p>
                 </div>
             </div>
-            {% endfor %}
         </div>
     </main>

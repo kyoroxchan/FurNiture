@@ -11,43 +11,7 @@ body {
 
 
 /* header------------------------------------------------------------------------------------------- */
-header {
-    height: 8vh;
-    border-bottom: solid 1px black;
-    display: flex;
-    justify-content: space-between;
-}
 
-header p {
-    line-height: 8vh;
-    font-size: 7vh;
-    margin-left: 2vw;
-}
-
-header p a {
-    text-decoration: none;
-    color: black;
-}
-
-.navArea {
-    height: 5vh;
-    display: flex;
-    justify-content: space-between;
-    padding: 0 2vw;
-}
-
-.nav {
-    margin-right: 2vh;
-    margin-top: -2vh;
-}
-
-.nav p {
-    border: 1px solid black;
-    height: 8vh;
-    width: 8vh;
-    border-radius: 50px;
-    overflow: hidden;
-}
 
 .logoutArea {
     margin-right: 2vh;

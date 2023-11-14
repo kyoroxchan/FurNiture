@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品削除確認</title>
+    <link rel="stylesheet" href="/static/css/goodsDel.css">
+    <link rel="stylesheet" href="/static/css/nav.css">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+
+    <main>
+        <h1>この商品を削除しますか？</h1>
+        {% for rec in result %}
+        <p><img src="/static/images/goods/{{rec['photo']}}" alt=""></p>
+        <h2>{{rec["name"]}}</h2>
+        {% endfor %}
+        <div class="btnArea">
+            <form action="/goodsDelComplete" method="get">
+                <input type="submit" value="削除" class="button del">
+            </form>
+            <form action="/user" method="get">
+                <input type="submit" value="キャンセル" class="button edit">
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

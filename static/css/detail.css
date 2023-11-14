@@ -5,7 +5,7 @@
 }
 
 body {
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 
@@ -121,28 +121,34 @@ body {
     background: #ffffff;
 }
 
-.sellerArea{
+.sellerArea {
     width: 60%;
     height: 8vh;
     margin: 0 auto;
     margin-top: 2vh;
-    background-color: red;
+    background-color: #D9D9D9;
     display: flex;
 }
-.seller{
+
+.sellerArea a {
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: relative;
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+
+.seller {
     height: 7vh;
     width: 7vh;
     border-radius: 50px;
     overflow: hidden;
     padding: .5vh;
-    }
-.seller a{
-    height: 100%;
-    width: 100%;
-    display: block;
-    position: relative;
 }
-.seller a img{
+
+.seller img {
     border: 1px solid black;
     height: 7vh;
     width: 7vh;
@@ -150,7 +156,8 @@ body {
     transition: .3s;
     position: absolute;
 }
-.sellerUser{
+
+.sellerUser {
     padding-left: 2vh;
     margin: auto 0;
 }

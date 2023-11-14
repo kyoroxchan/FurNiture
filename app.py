@@ -23,6 +23,8 @@ def top():
     session.pop("file", None)
     session.pop("price", None)
     session.pop("info", None)
+    session.pop("gid", None)
+    session.pop("photo", None)
 
     if "nickname" in session:
         res = {"icon": session["icon"]}
@@ -235,11 +237,10 @@ def profile():
         "profile": session["profile"],
         "mail": session["mail"],
     }
-
-    directory_path = "static/images/icon/"
-    file_name = res["icon"]
-    file_path = os.path.join(directory_path, file_name)
-    os.remove(file_path)
+    nick = request.form["nick"]
+    icon = filename
+    profile = request.form["profile"]
+    print(nick)
 
     # ***ファイルオブジェクト取得***
     file = request.files["file"]
@@ -247,61 +248,99 @@ def profile():
     filename = file.filename
     # ***ファイル受信チェック***
     if not filename:
-        return render_template("profileUp.html")
-    # ***ファイルオープン***
-    img = Image.open(file)
-    # ***日時情報の取得***
-    savedate = datetime.now().strftime("%Y%m%d_%H%M%S_")
-    # ***安全なファイル名に変換***
-    filename = savedate + secure_filename(filename)
-    # ***保存用フルパス作成***
-    os.path.join("./static/images/icon", filename)
-    save_path = os.path.join("./static/images/icon", filename)
-    # ***ファイル保存***
-    img.save(save_path, quality=90)
+        sql = (
+            'UPDATE user SET nick = "'
+            + nick
+            + '", profile = "'
+            + profile
+            + '" WHERE mail = "'
+            + res["mail"]
+            + '";'
+        )
+        print(sql)
+        try:
+            con = con_db()
+            cur = con.cursor(dictionary=True)
+            cur.execute(sql)
+            con.commit()
+            session["nickname"] = nick
+            session["profile"] = profile
+        except mysql.connector.errors.ProgrammingError as e:
+            print("***DB接続エラー***")
+            print(type(e))
+            print(e)
+        except Exception as e:
+            print("***システム運行プログラムエラー***")
+            print(type(e))
+            print(e)
+        finally:
+            cur.close()
+            con.close()
 
-    nick = request.form["nick"]
-    icon = filename
-    profile = request.form["profile"]
-    print(nick)
+    else:
+        directory_path = "static/images/icon/"
+        file_name = res["icon"]
+        file_path = os.path.join(directory_path, file_name)
+        if not file_name == "unknownUser.jpg":
+            os.remove(file_path)
 
-    sql = (
-        'UPDATE user SET nick = "'
-        + nick
-        + '", icon = "'
-        + icon
-        + '", profile = "'
-        + profile
-        + '" WHERE mail = "'
-        + res["mail"]
-        + '";'
-    )
-    print(sql)
+        # ***ファイルオープン***
+        rec = extension_check(filename)
+        if rec == "True":
+            img = Image.open(file)
+            img = crop_max_square(img)
+            # ***日時情報の取得***
+            savedate = datetime.now().strftime("%Y%m%d_%H%M%S_")
+            # ***安全なファイル名に変換***
+            filename = savedate + secure_filename(filename)
+            # ***保存用フルパス作成***
+            os.path.join("./static/images/icon", filename)
+            save_path = os.path.join("./static/images/icon", filename)
+            # ***ファイル保存***
 
-    try:
-        con = con_db()
-        cur = con.cursor(dictionary=True)
-        cur.execute(sql)
-        con.commit()
-        session["nickname"] = nick
-        session["icon"] = icon
-        session["profile"] = profile
-    except mysql.connector.errors.ProgrammingError as e:
-        print("***DB接続エラー***")
-        print(type(e))
-        print(e)
-    except Exception as e:
-        print("***システム運行プログラムエラー***")
-        print(type(e))
-        print(e)
-    finally:
-        cur.close()
-        con.close()
+            img.save(save_path, quality=90)
+
+        nick = request.form["nick"]
+        icon = filename
+        profile = request.form["profile"]
+        print(nick)
+
+        sql = (
+            'UPDATE user SET nick = "'
+            + nick
+            + '", icon = "'
+            + icon
+            + '", profile = "'
+            + profile
+            + '" WHERE mail = "'
+            + res["mail"]
+            + '";'
+        )
+        print(sql)
+        try:
+            con = con_db()
+            cur = con.cursor(dictionary=True)
+            cur.execute(sql)
+            con.commit()
+            session["nickname"] = nick
+            session["icon"] = icon
+            session["profile"] = profile
+        except mysql.connector.errors.ProgrammingError as e:
+            print("***DB接続エラー***")
+            print(type(e))
+            print(e)
+        except Exception as e:
+            print("***システム運行プログラムエラー***")
+            print(type(e))
+            print(e)
+        finally:
+            cur.close()
+            con.close()
 
     return render_template("profileUpComplete.html", res=res)
 
 
-# 商品-------------------------------------------------------------------------------------------
+# 商品登録-------------------------------------------------------------------------------------------
 
 
 @app.route("/GRegister")
@@ -343,20 +382,25 @@ def GRegisterCheck():
     file = request.files["file"]
 
     filename = file.filename
-    # ***ファイル受信チェック***
+
     if filename:
-        # ***ファイルオープン***
-        img = Image.open(file)
-        # ***日時情報の取得***
-        savedate = datetime.now().strftime("%Y%m%d_%H%M%S_")
-        # ***安全なファイル名に変換***
-        filename = savedate + secure_filename(filename)
-        # ***保存用フルパス作成***
-        os.path.join("./static/images/goods", filename)
-        save_path = os.path.join("./static/images/goods/", filename)
-        # ***ファイル保存***
-        img.save(save_path, quality=90)
-        images = filename
+        rec = extension_check(filename)
+        if rec == "True":
+            # ***ファイルオープン***
+            img = Image.open(file)
+            img = crop_max_square(img)
+            # ***日時情報の取得***
+            savedate = datetime.now().strftime("%Y%m%d_%H%M%S_")
+            # ***安全なファイル名に変換***
+            filename = savedate + secure_filename(filename)
+            # ***保存用フルパス作成***
+            os.path.join("./static/images/goods", filename)
+            save_path = os.path.join("./static/images/goods/", filename)
+            # ***ファイル保存***
+            img.save(save_path, quality=90)
+            images = filename
+        else:
+            images = "unknownGoods.jpeg"
     else:
         images = "unknownGoods.jpeg"
 
@@ -434,18 +478,273 @@ def GRegisterComplete():
     return render_template("GRegisterComplete.html", result=result, res=res)
 
 
+# 商品詳細-------------------------------------------------------------------------------------------
+
+
 @app.route("/detail/<gid>", methods=["GET"])
 def detail(gid):
+    session.pop("gid", None)
     sql = 'SELECT * FROM goods WHERE GID = "' + gid + '";'
 
     result = select(sql)
+
+    for rec in result:
+        mail = rec["mail"]
+    print(mail)
+
+    sql = 'SELECT nick,icon,mail FROM user WHERE mail ="' + mail + '";'
+
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        userP = cur.fetchall()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    print(userP)
+
+    session.pop("gid", None)
+
+    if "nickname" in session:
+        res = {
+            "nickname": session["nickname"],
+            "icon": session["icon"],
+            "mail": session["mail"],
+        }
+        if res["mail"] == mail:
+            session["gid"] = gid
+            return render_template(
+                "detailUser.html", result=result, userP=userP, res=res
+            )
+        else:
+            return render_template(
+                "detailLogin.html", result=result, userP=userP, res=res
+            )
+    else:
+        return render_template("detail.html", result=result, userP=userP)
+
+
+# 商品編集-------------------------------------------------------------------------------------------
+
+
+@app.route("/goodsEdit", methods=["GET"])
+def goodsEdit():
+    gid = session["gid"]
+    sql = 'SELECT * FROM goods WHERE GID = "' + gid + '";'
+
+    result = select(sql)
+
+    for rec in result:
+        session["photo"] = rec["photo"]
+
+    return render_template("goodsEdit.html", result=result)
+
+
+@app.route("/goodsEditComplete", methods=["POST"])
+def goodsEditComplete():
+    res = {
+        "nickname": session["nickname"],
+        "icon": session["icon"],
+        "profile": session["profile"],
+        "mail": session["mail"],
+        "photo": session["photo"],
+    }
+
+    name = request.form["name"]
+    price = request.form["price"]
+    info = request.form["info"]
+
+    print(name)
+
+    gid = session["gid"]
+    # ***ファイルオブジェクト取得***
+    file = request.files["file"]
+
+    filename = file.filename
+    # ***ファイル受信チェック***
+    if not filename:
+        sql = (
+            'UPDATE goods SET name = "'
+            + name
+            + '", price = "'
+            + price
+            + '", info = "'
+            + info
+            + '" WHERE gid = "'
+            + gid
+            + '";'
+        )
+        print("NOOOOOOOOOO" + sql)
+        try:
+            con = con_db()
+            cur = con.cursor(dictionary=True)
+            cur.execute(sql)
+            con.commit()
+        except mysql.connector.errors.ProgrammingError as e:
+            print("***DB接続エラー***")
+            print(type(e))
+            print(e)
+        except Exception as e:
+            print("***システム運行プログラムエラー***")
+            print(type(e))
+            print(e)
+        finally:
+            cur.close()
+            con.close()
+
+    else:
+        directory_path = "static/images/goods/"
+        file_name = res["photo"]
+        file_path = os.path.join(directory_path, file_name)
+        if not file_name == "unknownGoods.jpg":
+            os.remove(file_path)
+
+        # ***ファイルオープン***
+        rec = extension_check(filename)
+        if rec == "True":
+            img = Image.open(file)
+            img = crop_max_square(img)
+            # ***日時情報の取得***
+            savedate = datetime.now().strftime("%Y%m%d_%H%M%S_")
+            # ***安全なファイル名に変換***
+            filename = savedate + secure_filename(filename)
+            # ***保存用フルパス作成***
+            os.path.join("./static/images/goods", filename)
+            save_path = os.path.join("./static/images/goods", filename)
+            # ***ファイル保存***
+
+            img.save(save_path, quality=90)
+
+        photo = filename
+        print(photo)
+
+        sql = (
+            'UPDATE goods SET name = "'
+            + name
+            + '", price = "'
+            + price
+            + '", info = "'
+            + info
+            + '", photo = "'
+            + photo
+            + '" WHERE gid = "'
+            + gid
+            + '";'
+        )
+        print("OKEEEEEEEEEEEEEEE" + sql)
+        try:
+            con = con_db()
+            cur = con.cursor(dictionary=True)
+            cur.execute(sql)
+            con.commit()
+        except mysql.connector.errors.ProgrammingError as e:
+            print("***DB接続エラー***")
+            print(type(e))
+            print(e)
+        except Exception as e:
+            print("***システム運行プログラムエラー***")
+            print(type(e))
+            print(e)
+        finally:
+            cur.close()
+            con.close()
+
+    session.pop("gid", None)
+    session.pop("photo", None)
+
+    return render_template("goodsEditComplete.html", res=res)
+
+
+# 商品削除-------------------------------------------------------------------------------------------
+
+
+@app.route("/goodsDel", methods=["GET"])
+def goodsDel():
+    gid = session["gid"]
+    sql = 'SELECT * FROM goods WHERE GID = "' + gid + '";'
+
+    result = select(sql)
+
+    return render_template("goodsDel.html", result=result)
+
+
+@app.route("/goodsDelComplete", methods=["GET"])
+def goodsDelComplete():
+    gid = session["gid"]
     
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        sql = 'DELETE FROM goods WHERE gid = "' + gid + '";'
+
+        cur.execute(sql)
+        con.commit()
+
+        print("records inserted.")
+
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    session.pop("gid", None)
+    return render_template("goodsDelComplete.html")
+
+
+# 出品者ページ-------------------------------------------------------------------------------------------
+
+
+@app.route("/userProfile/<mail>", methods=["GET"])
+def userProfile(mail):
+    sql = 'SELECT icon,nick,profile FROM user WHERE mail = "' + mail + '";'
+
+    print(sql)
+
+    result = select(sql)
+
+    sql = 'SELECT * FROM goods WHERE mail ="' + mail + '";'
+
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        goods = cur.fetchall()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
 
     if "nickname" in session:
         res = {"nickname": session["nickname"], "icon": session["icon"]}
-        return render_template("detailLogin.html", result=result, res=res)
+        return render_template(
+            "userProfileLogin.html", result=result, goods=goods, res=res
+        )
     else:
-        return render_template("detail.html", result=result)
+        return render_template("userProfile.html", result=result, goods=goods)
 
 
 # DB接続-------------------------------------------------------------------------------------------
@@ -476,6 +775,39 @@ def select(sql):
         cur.close()
         con.close()
     return result
+
+
+def extension_check(filename):
+    Extension = ["jpg", "png", "gif"]
+
+    if "." in filename:
+        ext = filename.rsplit(".", 1)[1]
+        ext = ext.lower()
+        print(ext)
+    # root, ext = os.path.splitext(filename)
+    # print(root)
+    # print(ext)
+    if ext in Extension:
+        rec = "True"
+    else:
+        rec = "False"
+    return rec
+
+
+def crop_center(pil_img, crop_width, crop_height):
+    img_width, img_height = pil_img.size
+    return pil_img.crop(
+        (
+            (img_width - crop_width) // 2,
+            (img_height - crop_height) // 2,
+            (img_width + crop_width) // 2,
+            (img_height + crop_height) // 2,
+        )
+    )
+
+
+def crop_max_square(pil_img):
+    return crop_center(pil_img, min(pil_img.size), min(pil_img.size))
 
 
 @app.errorhandler(413)

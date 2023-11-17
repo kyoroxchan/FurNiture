@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ニュース</title>
+    <link rel="stylesheet" href="/static/css/news.css">
+</head>
+
+<body>
+    <section id="new">
+        <h1>News<span>お知らせ</span></h1>
+        <div class="newsArea">
+            {% for rec in result %}
+            <dl>
+                <dt>{{rec.title}}</dt>
+                <dd class="data">{{rec.data}}</dd>
+                <dd class="day">{{rec.day}}</dd>
+            </dl>
+            <hr>
+            {% endfor %}
+        </div>
+    </section>
+</body>
+
+</html>

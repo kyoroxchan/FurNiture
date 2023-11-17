@@ -1,0 +1,37 @@
+body {
+    position: relative;
+    background: rgb(2, 2, 22);
+    overflow: hidden;
+}
+
+
+h1 {
+    text-align: center;
+    color: #fff;
+}
+
+.listArea {
+    height: 80vh;
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
+table {
+    width: 200vw;
+    background: rgba(255, 255, 255, 0.697);
+    position: relative;
+}
+
+th {
+    background-color: white;
+    position: sticky;
+    top: 0;
+}
+
+tr {
+    height: 8vh;
+}
+
+img {
+    height: 8vh;
+}

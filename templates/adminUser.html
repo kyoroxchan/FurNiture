@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ページ</title>
+    <link rel="stylesheet" href="/static/css/adminUser.css">
+</head>
+
+<body>
+    <main>
+        <h1>会員情報</h1>
+        <div class="listArea">
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>ニックネーム</th>
+                    <th>メールアドレス</th>
+                    <th>氏名</th>
+                    <th>シメイ</th>
+                    <th>性別</th>
+                    <th>電話番号</th>
+                    <th>郵便番号</th>
+                    <th>住所</th>
+                    <th>アイコン画像</th>
+                    <th>自己紹介</th>
+                </tr>
+                {% for rec in result %}
+                <tr>
+                    <td>{{rec.id}}</td>
+                    <td>{{rec.nick}}</td>
+                    <td>{{rec.mail}}</td>
+                    <td>{{rec.sei}}{{rec.mei}}</td>
+                    <td>{{rec.sei2}}{{rec.mei2}}</td>
+                    <td>{{rec.sex}}</td>
+                    <td>{{rec.phone}}</td>
+                    <td>{{rec.post}}</td>
+                    <td>{{rec.pref}}{{rec.addr}}{{rec.home}}{{rec.bname}}</td>
+                    <td><img src="/static/images/icon/{{rec.icon}}" alt="">{{rec.icon}}</td>
+                    <td>{{rec.profile}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ログイン</title>
+    <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+
+<body>
+    <form action="/adminComplete" class="wrapper mainBox" method="post">
+        <h1>管理者ログイン</h1>
+        <div>
+            <p>
+                <label>ログインID</label>
+                <input type="text" name="id" class="textbox" required>
+            </p>
+            <p>
+                <label>パスワード</label>
+                <input type="password" name="pass" class="textbox" required>
+            <p class="box">
+                <input type="submit" value="ログイン" class="button">
+            </p>
+        </div>
+    </form>
+
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+h1 {
+    margin-bottom: 20px;
+    font-size: 300%;
+    text-align: center;
+    letter-spacing: 5px;
+    
+}
+
+h1 span {
+    display: block;
+    font-size: 30%;
+    color: var(--sub-clr);
+}
+
+#new {
+    width: 80%;
+    padding: 0 10%;
+}
+
+.newsArea {
+    padding: 1% 0;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#new dl {
+    padding: 0 20px;
+}
+
+#new dt {
+    letter-spacing: 1px;
+    font-size: 120%;
+}
+
+
+/* 近接・反復・整列 */
+dd{
+    margin-inline-start: 10px;
+}
+#new dd {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.data{
+    width: 95%;
+}
+.day{
+    text-align: right;
+    margin-inline-start: 0;
+    font-size: 80%;
+}

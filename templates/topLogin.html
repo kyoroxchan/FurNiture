@@ -5,8 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FurNiture</title>
-    <link rel="stylesheet" href="../static/css/topLogin.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/css/modaal.min.css">
     <link rel="stylesheet" href="../static/css/navLogin.css">
+    <link rel="stylesheet" href="../static/css/topLogin.css">
 </head>
 
 <body>
@@ -21,7 +23,10 @@
                     </label>
                 </form>
             </div>
-            <div class="nav">
+            <div class="nav info-list">
+                <p class="bellArea"><a href="http://localhost:5000/news" class="iframe-open bell"><img
+                            src="/static/images/material/bell.png" alt=""></a>
+                </p>
                 <p><a href="http://localhost:5000/user"><img src="/static/images/icon/{{res.icon}}" alt=""></a></p>
             </div>
         </div>
@@ -43,6 +48,10 @@
             </ul>
         </div>
     </main>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
+    <script src="/static/js/topLogin.js"></script>
+
 </body>
 
 </html>

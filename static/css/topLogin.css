@@ -9,6 +9,27 @@ body {
 }
 
 
+.nav .bellArea .bell {
+    display: block;
+    width: 5vh;
+    padding: 0.1vh;
+
+}
+
+.bell img {
+    width: 100%;
+}
+
+.nav {
+    display: flex;
+}
+
+.nav .bellArea {
+    border-radius: 0;
+    border: none;
+
+}
+
 /* main------------------------------------------------------------------------------------------- */
 
 
@@ -73,3 +94,22 @@ body {
     color: white;
     box-shadow: 0 0 10px black;
 }
+
+/* モーダルウィンドウ------------------------------------------------------------------------------------------- */
+
+.hide-area {
+    display: none;
+}
+
+.modaal-close:after,
+.modaal-close:before {
+    background: #ccc;
+}
+
+.modaal-close:focus:after,
+.modaal-close:focus:before,
+.modaal-close:hover:after,
+.modaal-close:hover:before {
+    background: #666;
+}
+

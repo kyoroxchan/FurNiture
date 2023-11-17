@@ -25,6 +25,7 @@ def top():
     session.pop("info", None)
     session.pop("gid", None)
     session.pop("photo", None)
+    session.pop("id", None)
 
     if "nickname" in session:
         res = {"icon": session["icon"]}
@@ -238,7 +239,6 @@ def profile():
         "mail": session["mail"],
     }
     nick = request.form["nick"]
-    icon = filename
     profile = request.form["profile"]
     print(nick)
 
@@ -681,7 +681,7 @@ def goodsDel():
 @app.route("/goodsDelComplete", methods=["GET"])
 def goodsDelComplete():
     gid = session["gid"]
-    
+
     try:
         con = con_db()
         cur = con.cursor(dictionary=True)
@@ -745,6 +745,79 @@ def userProfile(mail):
         )
     else:
         return render_template("userProfile.html", result=result, goods=goods)
+
+
+# お知らせ-------------------------------------------------------------------------------------------
+@app.route("/news", methods=["GET"])
+def news():
+    sql = "SELECT * FROM news ORDER BY day DESC;"
+
+    result = select(sql)
+    return render_template("news.html", result=result)
+
+
+# 管理者-------------------------------------------------------------------------------------------
+
+
+@app.route("/admin", methods=["GET"])
+def admin():
+    test = {}
+    session.pop("id", None)
+    return render_template("adminLogin.html", test=test)
+
+
+@app.route("/adminComplete", methods=["POST"])
+def adminComplete():
+    result = {}
+    test = request.form
+
+    sql = 'SELECT id,pass FROM admin WHERE id ="' + test["id"] + '";'
+    print(sql)
+    result = select(sql)
+    if not result:
+        return render_template("adminLogin.html", test=test)
+
+    for rec in result:
+        print(rec["id"])
+
+    if not test["pass"] == rec["pass"]:
+        return render_template("adminLogin.html", test=test)
+
+    session["id"] = rec["id"]
+    if not "id" in session:
+        return render_template("adminLogin.html")
+
+    return render_template("adminComplete.html")
+
+
+@app.route("/administrator", methods=["POST"])
+def administrator():
+    if not "id" in session:
+        return render_template("adminLogin.html")
+
+    return render_template("administrator.html")
+
+
+@app.route("/adminUser", methods=["GET"])
+def adminUser():
+    sql = "SELECT * FROM user;"
+
+    result = select(sql)
+    return render_template("adminUser.html", result=result)
+
+
+@app.route("/adminGoods", methods=["GET"])
+def adminGoods():
+    sql = "SELECT * FROM goods;"
+
+    result = select(sql)
+    return render_template("adminGoods.html", result=result)
+
+
+@app.route("/adminNews", methods=["GET"])
+def adminNews():
+    test = {}
+    return render_template("adminLogin.html", test=test)
 
 
 # DB接続-------------------------------------------------------------------------------------------

@@ -1,0 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: hidden;
+    position: relative;
+    background: rgb(2, 2, 22);
+}
+
+.mainBox {
+    text-align: center;
+    width: 60vh;
+    height: 25vh;
+    background: rgba(255, 255, 255, 0.697);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 30vh 0 0 -30vh;
+    padding: 1vh;
+}
+h1{
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+}
+.box{
+    margin-top: 1.5vh;
+}

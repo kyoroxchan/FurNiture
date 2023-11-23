@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ページ</title>
+    <link rel="stylesheet" href="/static/css/adminUser.css">
+
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <main>
+        <h1>お知らせ情報</h1>
+        <form action="/administrator" method="post" class="b1">
+            <input type="submit" value="戻る" class="button">
+        </form>
+        <form action="/adminNewsAdd" method="post" class="b2">
+            <input type="submit" value="追加" class="button">
+        </form>
+        <div class="listArea">
+            <table border="1" style="width: 120vw;">
+                <tr>
+                    <th>タイトル</th>
+                    <th>内容</th>
+                    <th>日付</th>
+                </tr>
+                {% for rec in result %}
+                <tr>
+                    <td>{{rec.title}}</td>
+                    <td>{{rec.data}}</td>
+                    <td>{{rec.day}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+</body>
+
+</html>

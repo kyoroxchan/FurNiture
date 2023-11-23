@@ -22,20 +22,9 @@ body {
     position: relative;
 }
 
-.leftArea p {
+.leftArea p img {
     height: 35vw;
     width: 35vw;
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-}
-
-.leftArea p img {
-    width: 100%;
     position: absolute;
     top: 0;
     right: 0;
@@ -50,6 +39,7 @@ body {
     height: 85vh;
     width: 45vw;
     position: relative;
+
 }
 
 .rightArea .goodsDetail {
@@ -61,25 +51,27 @@ body {
 .nameArea {
     position: relative;
     width: 75%;
-    height: 3vh;
-    margin: 10vh auto -.2em auto;
+    height: 12vh;
+    margin: 5vh auto -.2em auto;
+    background: rgba(255, 255, 255, 0.7);
+    margin-bottom: 2vh;
+
 }
 
 .goodsDetail h1 {
-    position: absolute;
     bottom: 0;
     margin: 0;
     width: 100%;
     text-align: left;
     font-size: 2em;
     line-height: 1em;
+
 }
 
 .goodsDetail h2 {
     text-align: right;
     font-size: 1.75em;
     margin-right: 15%;
-    margin-bottom: 3vh;
 }
 
 .goodsDetail .info {
@@ -91,6 +83,7 @@ body {
     padding: 1vh;
     overflow-y: scroll;
 }
+
 
 .nextArea {
     width: 30%;

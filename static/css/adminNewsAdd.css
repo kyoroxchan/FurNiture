@@ -1,0 +1,32 @@
+body {
+    position: relative;
+    background: rgb(2, 2, 22);
+    overflow: hidden;
+}
+
+main {
+    text-align: center;
+    width: 60vh;
+    height: 60vh;
+    background: rgba(255, 255, 255, 0.697);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 20vh 0 0 -30vh;
+    padding: 1vh;
+}
+
+h1{
+    margin: 0 ;
+}
+.texttitle{
+    height: 5vh;
+    width: 20vw;
+    font-size: 1.6em;
+    text-align: center;
+}
+.textdata {
+    height: 20vh;
+    width: 20vw;
+    font-size: 1.5em;
+}

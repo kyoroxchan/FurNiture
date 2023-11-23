@@ -7,35 +7,50 @@
     <title>商品登録</title>
     <link rel="stylesheet" href="/static/css/GRegister.css">
     <link rel="stylesheet" href="/static/css/navLogin.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
 </head>
 
 <body>
     <header>
         <p><a href="http://localhost:5000">FurNiture</a></p>
     </header>
-
-    <form action="/GRegisterCheck" class="wrapper" method="post" enctype="multipart/form-data">
-        <h1>商品登録</h1>
-        <div class="first">
-            <p class="textArea">
-                <label>商品名</label>
-                <input type="text" name="name" class="textbox" maxlength="50" value="{{result.name}}">
-            </p>
-            <p class="textArea">
-                <label>商品画像</label><br>
-                <input type="file" name="file">
-            <p class="textArea">
-                <label>値段</label>
-                <input type="number" name="price" class="textbox" maxlength="8" value="{{result.price}}">
-            </p>
-            <p class="textArea">
-                <label>商品説明</label><br>
-                <textarea name="info" class="textbox pro" maxlength="200">{{result.info}}</textarea>
-            <p class="box">
-                <input type="submit" value="確認" class="button">
-            </p>
-        </div>
-    </form>
+    <main>
+        <form action="/GRegisterCheck" class="wrapper" method="post" enctype="multipart/form-data">
+            <h1>商品登録</h1>
+            <div class="first">
+                <p class="textArea">
+                    <label>商品名</label>
+                    <input type="text" name="name" class="textbox" maxlength="50" value="{{result.name}}">
+                </p>
+                <div class="textArea double">
+                    <div>
+                        <label>カテゴリー</label><br>
+                        <select name="category" value={{result.category}}>
+                            <option value="other">その他</option>
+                            <option value="table">机</option>
+                            <option value="chair">椅子</option>
+                            <option value="tools">工具</option>
+                            <option value="material">素材</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>商品画像</label><br>
+                        <input type="file" name="file">
+                    </div>
+                </div>
+                <p class="textArea">
+                    <label>値段</label>
+                    <input type="number" name="price" class="textbox" maxlength="8" value="{{result.price}}">
+                </p>
+                <p class="textArea">
+                    <label>商品説明</label><br>
+                    <textarea name="info" class="textbox pro" maxlength="200">{{result.info}}</textarea>
+                <p class="box">
+                    <input type="submit" value="確認" class="button">
+                </p>
+            </div>
+        </form>
+    </main>
 </body>
 
 </html>

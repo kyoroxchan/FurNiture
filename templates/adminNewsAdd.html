@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品編集</title>
+    <link rel="stylesheet" href="/static/css/adminNewsAdd.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <main>
+        <form action="adminNewsAddComplete" class="wrapper" method="post">
+            <h1>お知らせ追加</h1>
+            <div class="first">
+                <p class="textArea">
+                    <label>タイトル</label><br>
+                    <input type="text" name="title" class="texttitle" maxlength="50">
+                </p>
+                <p class="textArea">
+                    <label>内容</label><br>
+                    <textarea name="data" class="textdata" maxlength="200"></textarea>
+                </p>
+                <p class="box">
+                    <input type="submit" value="追加" class="button">
+                </p>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

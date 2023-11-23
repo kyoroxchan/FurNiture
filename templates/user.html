@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=], initial-scale=1.0">
     <title>{{res.nickname}}のマイページ</title>
-    <link rel="stylesheet" href="../static/css/user.css">
     <link rel="stylesheet" href="/static/css/navLogin.css">
+    <link rel="stylesheet" href="../static/css/user.css">
 
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
 </head>
 
 <body>
@@ -44,7 +45,7 @@
                     <a href="http://localhost:5000/detail/{{ rec['gid']}}">
                         <div class="image">
                             <img src="/static/images/goods/{{rec['photo']}}" alt="">
-                            <p class="price">{{ rec["price"]}}</p>
+                            <p class="price">¥{{ rec["price"]}}</p>
                         </div>
                     </a>
                 </li>

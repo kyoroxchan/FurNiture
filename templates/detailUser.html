@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../static/css/detailUser.css">
     <link rel="stylesheet" href="/static/css/navLogin.css">
 
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
 </head>
 
 <body>
@@ -40,8 +41,8 @@
                 <div class="goodsDetail">
                     <div class="nameArea">
                         <h1>{{ rec["name"]}}</h1>
+                        <h2>{{ price }}円</h2>
                     </div>
-                    <h2>{{ rec["price"]}}円</h2>
                     <p class="info">{{ rec["info"]}}</p>
                     {% endfor %}
                     {% for user in userP %}
@@ -65,3 +66,6 @@
             </div>
         </div>
     </main>
+</body>
+
+</html>

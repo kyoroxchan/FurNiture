@@ -7,6 +7,7 @@
     <title>商品ページ</title>
     <link rel="stylesheet" href="../static/css/detail.css">
     <link rel="stylesheet" href="/static/css/nav.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
 </head>
 
 <body>
@@ -39,8 +40,8 @@
                 <div class="goodsDetail">
                     <div class="nameArea">
                         <h1>{{ rec["name"]}}</h1>
+                        <h2>{{ price }}円</h2>
                     </div>
-                    <h2>{{ rec["price"]}}円</h2>
                     <p class="info">{{ rec["info"]}}</p>
                     {% endfor %}
                     {% for user in userP %}
@@ -56,8 +57,14 @@
                         </a>
                     </div>
                     {% endfor %}
-                    <p class="nextArea"><a href="" class="next">購入</a></p>
+                    <p class="nextArea">
+                        <button onclick="clickEvent()" class="next">購入</button>
+                    </p>
                 </div>
             </div>
         </div>
     </main>
+    <script src="/static/js/loginAlert.js"></script>
+</body>
+
+</html>

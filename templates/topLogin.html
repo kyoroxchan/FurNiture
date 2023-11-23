@@ -9,9 +9,15 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/css/modaal.min.css">
     <link rel="stylesheet" href="../static/css/navLogin.css">
     <link rel="stylesheet" href="../static/css/topLogin.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
 </head>
 
 <body>
+
+    <!-- <div id="splash">
+        <div id="splash_logo"><img src="/static/images/material/logo2.png" alt="" class="fadeUp"></div>
+    </div> -->
+
     <header>
         <p><a href="http://localhost:5000">FurNiture</a></p>
         <div class="navArea">
@@ -33,14 +39,24 @@
     </header>
 
     <main>
+        <div class="category">
+            <ul class="filter-list">
+                <li data-filter="all" class="is-active"><span>すべて</span></li>
+                <li data-filter="table"><span>机</span></li>
+                <li data-filter="chair"><span>椅子</span></li>
+                <li data-filter="tools"><span>工具</span></li>
+                <li data-filter="material"><span>素材</span></li>
+                <li data-filter="other"><span>その他</span></li>
+            </ul>
+        </div>
         <div class="goodsArea">
-            <ul class="goodsGroup">
+            <ul class="goodsGroup filter-item">
                 {% for rec in result %}
-                <li class="goods">
+                <li class="goods" data-item="{{rec['category']}}">
                     <a href="http://localhost:5000/detail/{{ rec['gid']}}">
                         <div class="image">
                             <img src="/static/images/goods/{{rec['photo']}}" alt="">
-                            <p class="price">{{ rec["price"]}}</p>
+                            <p class="price">¥{{ rec["price"]}}</p>
                         </div>
                     </a>
                 </li>
@@ -50,8 +66,9 @@
     </main>
     <script src="/static/js/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.4/vivus.min.js"></script>
     <script src="/static/js/topLogin.js"></script>
-
+    <script src="/static/js/top.js"></script>
 </body>
 
 </html>

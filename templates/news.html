@@ -6,12 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ニュース</title>
     <link rel="stylesheet" href="/static/css/news.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
 </head>
 
 <body>
     <section id="new">
         <h1>News<span>お知らせ</span></h1>
-        <div class="newsArea">
+
+        <ul class="tab">
+            <li><a href="#all">全体</a></li>
+            <li><a href="#goods">出品</a></li>
+        </ul>
+
+        <div id="all" class="newsArea area">
             {% for rec in result %}
             <dl>
                 <dt>{{rec.title}}</dt>
@@ -21,7 +28,21 @@
             <hr>
             {% endfor %}
         </div>
+        <div id="goods" class="newsArea area">
+            {% for item in goods %}
+            <dl>
+                <a href="http://localhost:5000/detail/{{ item['gid']}}">
+                    <dt>{{item.name}}</dt>
+                    <dd class="data">{{item.info}}</dd>
+                    <dd class="day">{{item.nick}}</dd>
+                </a>
+            </dl>
+            <hr>
+            {% endfor %}
+        </div>
     </section>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/news.js"></script>
 </body>
 
 </html>

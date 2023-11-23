@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>購入画面</title>
+    <link rel="stylesheet" href="/static/css/order.css">
+    <link rel="stylesheet" href="/static/css/navLogin.css">
+
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+        <div class="navArea">
+            <div class="nav">
+                <p><a href="http://localhost:5000/user"><img src="/static/images/icon/{{res.icon}}" alt=""></a></p>
+            </div>
+        </div>
+    </header>
+    <main>
+        <h1>購入画面</h1>
+        <section>
+            {% for rec in result %}
+            <div class="goods">
+                <p class="image"><img src="/static/images/goods/{{rec.photo}}" alt=""></p>
+                <div>
+                    <p>{{rec.name}}</p>
+                    <p>{{price}}円</p>
+                    <p>{{rec.info}}</p>
+                </div>
+            </div>
+            {% endfor %}
+            {% for up in userP %}
+            <table>
+                <tr>
+                    <th>値段</th>
+                    <td>{{price}}</td>
+                </tr>
+                <tr>
+                    <th>残高</th>
+                    <td></td>
+                </tr>
+                <tr>
+                    <th>配送先</th>
+                    <td>{{up.pref}}{{up.addr}}{{up.home}}{{up.bname}}</td>
+                </tr>
+                <tr>
+                    <th>クーポン</th>
+                    <td>
+                        <select name="coupon">
+                            <option value="0">利用しない</option>
+                            <option value="10">10%OFF</option>
+                            <option value="30">30%OFF</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+            {% endfor %}
+
+        </section>
+    </main>
+</body>
+
+</html>

@@ -4,27 +4,41 @@
     --hover-clr: #6d6d6d;
 }
 
-body {
-    overflow-x: hidden;
+li {
+    list-style: none;
 }
 
-.bellArea{
+body {
+    overflow-x: hidden;
+    position: relative;
+}
+
+.bellArea {
     padding: 0 0 0 3vh;
 }
-.nav .bellArea .bell{
+
+.nav .bellArea .bell {
     display: block;
     width: 5vh;
     padding: 0.1vh;
 
 }
 
-.bell img{
+.bell img {
     width: 100%;
 }
 
 
 /* main------------------------------------------------------------------------------------------- */
 
+main {
+    display: flex;
+}
+
+.goodsArea {
+    width: 88vw;
+    margin-left: 12vw;
+}
 
 .goodsGroup {
     display: flex;
@@ -65,6 +79,7 @@ body {
     bottom: 0;
     left: 0;
     margin: auto;
+    background: white;
 }
 
 .goods .image {
@@ -74,16 +89,84 @@ body {
 .goods .price {
     z-index: 5;
     background: rgba(52.26, 0, 201.01, 0.76);
-    width: 13vh;
+    width: 15vh;
     height: 5vh;
     position: absolute;
     bottom: 2%;
     right: 0;
-    padding-right: .5em;
+    padding-right: .1em;
     text-align: right;
     line-height: 5vh;
-    font-size: 2em;
+    font-size: 20px;
     border-radius: 20px 0 0 20px;
     color: white;
     box-shadow: 0 0 10px black;
+}
+
+/* -------------------------------- */
+.category {
+    z-index: 10;
+    width: 12vw;
+    height: 100vh;
+    position: fixed;
+}
+
+
+.filter-list li {
+    text-align: center;
+    background: #eee;
+    border: 2px solid #fff;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.filter-list li.is-active {
+    background: #333;
+    color: #fff;
+}
+
+/* Loading背景画面設定　*/
+#splash {
+    /*fixedで全面に固定*/
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    background: hsl(206.13deg 100% 68.04%);
+    text-align: center;
+    color: #fff;
+}
+
+/* Loading画像中央配置　*/
+#splash_logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Loading アイコンの大きさ設定　*/
+#splash_logo img {
+    width: 260px;
+}
+
+/* fadeUpをするアイコンの動き */
+.fadeUp {
+    animation-name: fadeUpAnime;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    opacity: 0;
+}
+
+@keyframes fadeUpAnime {
+    from {
+        opacity: 0;
+        transform: translateY(100px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商品登録内容確認</title>
-    <link rel="stylesheet" href="/static/css/check.css">
+    <link rel="stylesheet" href="/static/css/GRegisterCheck.css">
     <link rel="stylesheet" href="/static/css/navLogin.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
 </head>
 
 <body>
@@ -15,27 +16,34 @@
     </header>
     <main>
         <h1>以下の内容で登録します</h1>
-        <ul>
-            <li>
-                <p class="itemName">商品名:</p>
-                <p class="item">{{result["name"]}}</p>
-            </li>
-            <hr>
-            <li>
-                <p class="itemName">商品画像:</p>
-                <p class="item">{{images}}</p>
-            </li>
-            <hr>
-            <li>
-                <p class="itemName">値段:</p>
-                <p class="item">{{result["price"]}}</p>
-            </li>
-            <hr>
-            <li>
-                <p class="itemName">商品説明:</p>
-                <p class="item">{{result["info"]}}</p>
-            </li>
-        </ul>
+        <table border="1">
+            <tr>
+                <th class="itemName">商品名</th>
+                <td class="item">{{result["name"]}}</td>
+            </tr>
+
+            <tr>
+                <th class="itemName">商品画像</th>
+                <td class="item"><img src="/static/images/goods/{{images}}" alt=""></td>
+            </tr>
+
+            <tr>
+                <th class="itemName">値段</th>
+                <td class="item">{{result["price"]}}</td>
+            </tr>
+
+            <tr>
+                <th class="itemName">カテゴリー</th>
+                <td class="item">{{result["category"]}}</td>
+            </tr>
+
+            <tr>
+                <th class="itemName">商品説明</th>
+                <td class="item">{{result["info"]}}</td>
+            </tr>
+            
+
+        </table>
         <div class="btnArea">
             <form action="/GRegisterComplete" method="post">
                 <input type="submit" value="登録" class="button">

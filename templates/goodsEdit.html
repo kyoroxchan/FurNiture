@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商品編集</title>
-    <link rel="stylesheet" href="/static/css/profileUp.css">
+    <link rel="stylesheet" href="/static/css/GRegister.css">
     <link rel="stylesheet" href="/static/css/nav.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
 </head>
 
 <body>
@@ -22,9 +23,22 @@
                     <label>商品名</label>
                     <input type="text" name="name" class="textbox" maxlength="50" value="{{rec.name}}">
                 </p>
-                <p class="textArea">
-                    <label>商品画像</label><br>
-                    <input type="file" name="file">
+                <div class="textArea double">
+                    <div>
+                        <label>カテゴリー</label><br>
+                        <select name="category" value={{result.category}}>
+                            <option value="other">その他</option>
+                            <option value="table">机</option>
+                            <option value="chair">椅子</option>
+                            <option value="tools">工具</option>
+                            <option value="material">素材</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>商品画像</label><br>
+                        <input type="file" name="file">
+                    </div>
+                </div>
                 <p class="textArea">
                     <label>値段</label>
                     <input type="text" name="price" class="textbox" maxlength="8" value="{{rec.price}}">

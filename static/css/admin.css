@@ -12,18 +12,41 @@ body {
 .mainBox {
     text-align: center;
     width: 60vh;
-    height: 25vh;
     background: rgba(255, 255, 255, 0.697);
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: 30vh 0 0 -30vh;
     padding: 1vh;
 }
-h1{
+
+h1 {
     padding-top: 2vh;
-    padding-bottom: 2vh;
 }
-.box{
+
+.box {
     margin-top: 1.5vh;
+}
+
+.button {
+    display: inline-block;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    height: 8vh;
+    padding: 4px 20px;
+    background: #3400c9;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    border: 2px solid #3400c9;
+    margin-top: 3vh;
+}
+
+.button:hover {
+    color: #3400c9;
+    background: #ffffff;
+}
+p{
+    margin-top: 2vh;
 }

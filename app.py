@@ -8,7 +8,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = "心がカギ"
-app.permanent_session_lifetime = timedelta(minutes=30)
+app.permanent_session_lifetime = timedelta(hours=24)
 app.config["MAX_CONTENT_LENGTH"] = 8**20
 
 # TOP-------------------------------------------------------------------------------------------
@@ -16,7 +16,7 @@ app.config["MAX_CONTENT_LENGTH"] = 8**20
 
 @app.route("/", methods=["GET"])
 def top():
-    sql = "SELECT * FROM goods;"
+    sql = "SELECT * FROM goods ORDER BY rand();"
 
     result = select(sql)
     session.pop("name", None)
@@ -415,6 +415,7 @@ def GRegisterCheck():
         return render_template("GRegister.html", result=result, err=err, res=res)
 
     session["name"] = result["name"]
+    session["category"] = result["category"]
     session["file"] = images
     session["price"] = result["price"]
     session["info"] = result["info"]
@@ -440,9 +441,9 @@ def GRegisterComplete():
         cur = con.cursor(dictionary=True)
         sql = """
     INSERT INTO goods 
-        (name,photo,price,info,mail)
+        (name,photo,price,info,category,mail)
     VALUES 
-        (%s, %s, %s, %s, %s)
+        (%s, %s, %s, %s, %s, %s)
     """
         data = [
             (
@@ -450,6 +451,7 @@ def GRegisterComplete():
                 result["file"],
                 result["price"],
                 result["info"],
+                result["category"],
                 session["mail"],
             )
         ]
@@ -472,6 +474,7 @@ def GRegisterComplete():
 
     session.pop("name", None)
     session.pop("file", None)
+    session.pop("category", None)
     session.pop("price", None)
     session.pop("info", None)
 
@@ -490,7 +493,9 @@ def detail(gid):
 
     for rec in result:
         mail = rec["mail"]
+        price = rec["price"]
     print(mail)
+    price = f"{price:,}"
 
     sql = 'SELECT nick,icon,mail FROM user WHERE mail ="' + mail + '";'
 
@@ -513,7 +518,7 @@ def detail(gid):
 
     print(userP)
 
-    session.pop("gid", None)
+    session["gid"] = gid
 
     if "nickname" in session:
         res = {
@@ -522,16 +527,15 @@ def detail(gid):
             "mail": session["mail"],
         }
         if res["mail"] == mail:
-            session["gid"] = gid
             return render_template(
-                "detailUser.html", result=result, userP=userP, res=res
+                "detailUser.html", result=result, userP=userP, res=res, price=price
             )
         else:
             return render_template(
-                "detailLogin.html", result=result, userP=userP, res=res
+                "detailLogin.html", result=result, userP=userP, res=res, price=price
             )
     else:
-        return render_template("detail.html", result=result, userP=userP)
+        return render_template("detail.html", result=result, userP=userP, price=price)
 
 
 # 商品編集-------------------------------------------------------------------------------------------
@@ -563,6 +567,7 @@ def goodsEditComplete():
     name = request.form["name"]
     price = request.form["price"]
     info = request.form["info"]
+    category = request.form["category"]
 
     print(name)
 
@@ -582,6 +587,8 @@ def goodsEditComplete():
             + info
             + '" WHERE gid = "'
             + gid
+            + '" WHERE category = "'
+            + category
             + '";'
         )
         print("NOOOOOOOOOO" + sql)
@@ -639,6 +646,8 @@ def goodsEditComplete():
             + photo
             + '" WHERE gid = "'
             + gid
+            + '" WHERE category = "'
+            + category
             + '";'
         )
         print("OKEEEEEEEEEEEEEEE" + sql)
@@ -708,6 +717,51 @@ def goodsDelComplete():
     return render_template("goodsDelComplete.html")
 
 
+# 購入処理-------------------------------------------------------------------------------------------
+
+
+@app.route("/order", methods=["GET"])
+def order():
+    res = {
+        "nickname": session["nickname"],
+        "icon": session["icon"],
+    }
+
+    gid = session["gid"]
+    mail = session["mail"]
+    sql = 'SELECT * FROM goods WHERE GID = "' + gid + '";'
+
+    result = select(sql)
+
+    for rec in result:
+        price = rec["price"]
+
+    price = f"{price:,}"
+
+    sql = 'SELECT * FROM user WHERE mail ="' + mail + '";'
+
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        userP = cur.fetchall()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    return render_template(
+        "order.html", result=result, userP=userP, price=price, res=res
+    )
+
+
 # 出品者ページ-------------------------------------------------------------------------------------------
 
 
@@ -750,10 +804,30 @@ def userProfile(mail):
 # お知らせ-------------------------------------------------------------------------------------------
 @app.route("/news", methods=["GET"])
 def news():
-    sql = "SELECT * FROM news ORDER BY day DESC;"
+    sql = "SELECT * FROM news ORDER BY nid DESC;"
 
     result = select(sql)
-    return render_template("news.html", result=result)
+
+    sql = "SELECT goods.gid,goods.name,goods.info,user.nick FROM goods JOIN user ON goods.mail = user.mail ORDER BY gid DESC;"
+
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        goods = cur.fetchall()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    return render_template("news.html", result=result, goods=goods)
 
 
 # 管理者-------------------------------------------------------------------------------------------
@@ -816,8 +890,53 @@ def adminGoods():
 
 @app.route("/adminNews", methods=["GET"])
 def adminNews():
-    test = {}
-    return render_template("adminLogin.html", test=test)
+    sql = "SELECT * FROM news;"
+
+    result = select(sql)
+    return render_template("adminNews.html", result=result)
+
+
+@app.route("/adminNewsAdd", methods=["POST"])
+def adminNewsAdd():
+    sql = "SELECT * FROM news;"
+
+    result = select(sql)
+    return render_template("adminNewsAdd.html", result=result)
+
+
+@app.route("/adminNewsAddComplete", methods=["POST"])
+def adminNewsAddComplete():
+    result = request.form
+
+    day = datetime.now().strftime("%Y%m%d")
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        sql = """
+    INSERT INTO news 
+        (title,data,day)
+    VALUES 
+        (%s, %s, %s)
+    """
+        data = [(result["title"], result["data"], day)]
+        cur.executemany(sql, data)
+        con.commit()
+
+        print("records inserted.")
+
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    return render_template("adminNewsComplete.html")
 
 
 # DB接続-------------------------------------------------------------------------------------------

@@ -18,29 +18,8 @@ main {
     text-align: center;
 }
 h1{
-    margin-top: 8vh;
-}
-ul {
-    width: 50%;
-    margin: 2vh auto;
-}
-
-ul li {
-
-    list-style: none;
-    display: flex;
-    background: #dbdbdb;
-}
-
-ul li .itemName {
-    width: 40%;
-    text-align: right;
-    padding-right: 5%;
-}
-
-ul li .item {
-    width: 60%;
-    text-align: center;
+    padding-top: 6vh;
+    padding-bottom: 3vh;
 }
 
 .btnArea {
@@ -71,6 +50,7 @@ ul li .item {
     color: #3400c9;
     background: #ffffff;
 }
+
 .button2 {
     display: inline-block;
     font-size: 18px;
@@ -90,4 +70,10 @@ ul li .item {
 .button2:hover {
     color: var(--hover-clr);
     background: #ffffff;
+}
+table{
+    margin: 0 auto;
+}
+.item img {
+    height: 20vh;
 }

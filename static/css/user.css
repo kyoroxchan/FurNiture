@@ -40,12 +40,17 @@ body {
 }
 
 /* main------------------------------------------------------------------------------------------- */
+main{
+    padding: 0;
 
+}
 .user {
     display: flex;
     width: 100vw;
     height: 30vh;
-    padding-top: 5vh;
+    padding-top: 15vh;
+    background: rgba(255, 255, 255, 0.7);
+
 }
 
 .left {
@@ -115,6 +120,8 @@ body {
     height: 8vh;
     width: 100vw;
     justify-content: center;
+    background: rgba(255, 255, 255, 0.7);
+
 }
 
 .btnArea li {
@@ -190,6 +197,7 @@ body {
     bottom: 0;
     left: 0;
     margin: auto;
+    background: white;
 }
 
 .goods .image {
@@ -199,15 +207,15 @@ body {
 .goods .price {
     z-index: 5;
     background: rgba(52.26, 0, 201.01, 0.76);
-    width: 13vh;
+    width: 15vh;
     height: 5vh;
     position: absolute;
     bottom: 2%;
     right: 0;
-    padding-right: .5em;
+    padding-right: .1em;
     text-align: right;
     line-height: 5vh;
-    font-size: 2em;
+    font-size: 20px;
     border-radius: 20px 0 0 20px;
     color: white;
     box-shadow: 0 0 10px black;

@@ -40,10 +40,11 @@ body {
 }
 
 /* main------------------------------------------------------------------------------------------- */
-main{
+main {
     padding: 0;
 
 }
+
 .user {
     display: flex;
     width: 100vw;
@@ -55,8 +56,8 @@ main{
 
 .left {
     display: flex;
-    width: 55vw;
-    justify-content: right;
+    width: 70vw;
+    justify-content: center;
 }
 
 .left .imgArea {
@@ -88,7 +89,8 @@ main{
 }
 
 .right {
-    margin: 1vh auto;
+    width: 30vw;
+    margin: -5vh 0 1vh 20vh;
 }
 
 .button {
@@ -96,21 +98,22 @@ main{
     font-size: 3vh;
     text-align: center;
     cursor: pointer;
-    width: 100%;
+    width: 60%;
     height: 5vh;
     padding: 8px 33px;
-    background: #3400c9;
+    background: #0050c99b;
     color: #ffffff;
     line-height: 1em;
     transition: .3s;
-    border: 2px solid #3400c9;
-    margin-top: 5vh;
+    border: 2px solid #3600c99b;
+    margin-top: 2vh;
     text-decoration: none;
     line-height: 5vh;
+    border-radius: 50px;
 }
 
 .button:hover {
-    color: #3400c9;
+    color: #0050c99b;
     background: #ffffff;
 }
 
@@ -220,3 +223,5 @@ main{
     color: white;
     box-shadow: 0 0 10px black;
 }
+
+.moneyArea {}

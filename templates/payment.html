@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品編集</title>
+    <link rel="stylesheet" href="/static/css/payment.css">
+    <link rel="stylesheet" href="/static/css/nav.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+    <main>
+        <form action="paymentComplete" class="wrapper" method="post">
+            <h1>残高追加</h1>
+            <div class="first">
+                <p class="textArea">
+                    <label>コード</label>
+                    <input type="text" name="code" class="textbox" maxlength="9" value="{{res.code}}">
+                    <input type="submit" value="追加" class="button">
+                </p>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

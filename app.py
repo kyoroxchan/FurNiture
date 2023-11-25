@@ -206,6 +206,25 @@ def user():
 
     result = select(sql)
 
+    sql = 'SELECT money FROM user WHERE mail ="' + session["mail"] + '";'
+
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        userP = cur.fetchall()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
     if "nickname" in session:
         res = {
             "nickname": session["nickname"],
@@ -213,7 +232,7 @@ def user():
             "profile": session["profile"],
             "mail": session["mail"],
         }
-        return render_template("user.html", result=result, res=res)
+        return render_template("user.html", result=result, res=res, userP=userP)
     else:
         return render_template("top.html", result=result)
 
@@ -338,6 +357,58 @@ def profile():
             con.close()
 
     return render_template("profileUpComplete.html", res=res)
+
+
+# 残高追加-------------------------------------------------------------------------------------------
+@app.route("/payment", methods=["GET"])
+def payment():
+    res = {}
+    return render_template("payment.html", res=res)
+
+
+@app.route("/paymentComplete", methods=["POST"])
+def paymentComplete():
+    res = {
+        "mail": session["mail"],
+    }
+    code = request.form["code"]
+    sql = 'SELECT money FROM prepaid WHERE CODE = "' + code + '";'
+
+    result = select(sql)
+    if not result:
+        return render_template("payment.html", res=res)
+    for rec in result:
+        money = rec["money"]
+
+    sql = 'SELECT money FROM user WHERE mail = "' + res["mail"] + '";'
+
+    result = select(sql)
+    for rec in result:
+        Umoney = rec["money"]
+
+    sumMoney = int(Umoney) + int(money)
+    sumMoney = str(sumMoney)
+    sql = (
+        'UPDATE user SET money = "' + sumMoney + '" WHERE mail = "' + res["mail"] + '";'
+    )
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        con.commit()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    return render_template("paymentComplete.html", res=res, money=money)
 
 
 # 商品登録-------------------------------------------------------------------------------------------
@@ -520,6 +591,25 @@ def detail(gid):
 
     session["gid"] = gid
 
+    sql = "SELECT * FROM goods ORDER BY rand() LIMIT 8;"
+
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        goods = cur.fetchall()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
     if "nickname" in session:
         res = {
             "nickname": session["nickname"],
@@ -528,14 +618,26 @@ def detail(gid):
         }
         if res["mail"] == mail:
             return render_template(
-                "detailUser.html", result=result, userP=userP, res=res, price=price
+                "detailUser.html",
+                result=result,
+                userP=userP,
+                goods=goods,
+                res=res,
+                price=price,
             )
         else:
             return render_template(
-                "detailLogin.html", result=result, userP=userP, res=res, price=price
+                "detailLogin.html",
+                result=result,
+                userP=userP,
+                goods=goods,
+                res=res,
+                price=price,
             )
     else:
-        return render_template("detail.html", result=result, userP=userP, price=price)
+        return render_template(
+            "detail.html", result=result, goods=goods, userP=userP, price=price
+        )
 
 
 # 商品編集-------------------------------------------------------------------------------------------
@@ -585,10 +687,10 @@ def goodsEditComplete():
             + price
             + '", info = "'
             + info
+            + '", category = "'
+            + category
             + '" WHERE gid = "'
             + gid
-            + '" WHERE category = "'
-            + category
             + '";'
         )
         print("NOOOOOOOOOO" + sql)
@@ -644,10 +746,10 @@ def goodsEditComplete():
             + info
             + '", photo = "'
             + photo
+            + '", category = "'
+            + category
             + '" WHERE gid = "'
             + gid
-            + '" WHERE category = "'
-            + category
             + '";'
         )
         print("OKEEEEEEEEEEEEEEE" + sql)

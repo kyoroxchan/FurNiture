@@ -64,6 +64,23 @@
             </div>
         </div>
     </main>
+    <section>
+        <h2>おすすめ商品</h2>
+        <div class="goodsArea">
+            <ul class="goodsGroup filter-item">
+                {% for item in goods %}
+                <li class="goods target" data-item="{{item['category']}}">
+                    <a href="http://localhost:5000/detail/{{ item['gid']}}">
+                        <div class="image">
+                            <img src="/static/images/goods/{{item['photo']}}" alt="">
+                            <p class="price">¥{{ item["price"]}}</p>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
     <script src="/static/js/loginAlert.js"></script>
 </body>
 

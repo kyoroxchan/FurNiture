@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=], initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{res.nickname}}のマイページ</title>
     <link rel="stylesheet" href="/static/css/navLogin.css">
     <link rel="stylesheet" href="../static/css/user.css">
@@ -28,7 +28,12 @@
                 </div>
             </div>
             <div class="right">
-                
+                <div class="moneyArea">
+                    {% for item in userP %}
+                    <p>残高<span>{{item.money}}</span>円</p>
+                    {% endfor %}
+                    <a class="button" href="http://localhost:5000/payment">残高追加</a>
+                </div>
                 <a class="button" href="http://localhost:5000/profileUp">プロフィール編集</a>
                 <a class="button" href="http://localhost:5000/GRegister">出品する</a>
             </div>
@@ -44,7 +49,7 @@
                 <li class="goods">
                     <a href="http://localhost:5000/detail/{{ rec['gid']}}">
                         <div class="image">
-                            <img src="/static/images/goods/{{rec['photo']}}" alt="">
+                            <img src="/static/images/goods/{{ rec['photo']}}" alt="">
                             <p class="price">¥{{ rec["price"]}}</p>
                         </div>
                     </a>

@@ -56,21 +56,22 @@ form {
     line-height: 8vh;
     transition: .3s;
     font-style: bold;
+    border-radius: 50px;
 }
 
 .button:hover {
-    color: #3400c9;
+    color: #0050c99b;
     background: #ffffff;
 }
 
 .edit {
-    background: #3400c9;
+    background: #0050c99b;
     color: #ffffff;
     border: 2px solid #3400c9;
 }
 
 .edit:hover {
-    color: #3400c9;
+    color: #0050c99b;
     background: #ffffff;
 }
 

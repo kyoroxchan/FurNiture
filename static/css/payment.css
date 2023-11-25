@@ -8,6 +8,9 @@ body {
     overflow-x: hidden;
 }
 
+
+
+
 /* main------------------------------------------------------------------------------------------- */
 main {
     position: relative;
@@ -22,9 +25,10 @@ main {
 
 h1 {
     font-size: 5vh;
-    margin-top: 4vh;
     width: 100%;
     transition: 1s;
+    text-align: center;
+    margin-top: 15vh;
 }
 
 .wrapper.active h1 {
@@ -48,7 +52,7 @@ label {
     position: absolute;
     width: 50vw;
     padding: 0 25vw;
-    margin-top: 10vh;
+    margin-top: 25vh;
     transition: 1s;
 }
 
@@ -76,7 +80,6 @@ label {
     line-height: 3em;
     font-weight: bold;
 }
-
 
 
 div label,
@@ -110,6 +113,7 @@ div p a {
     transition: .3s;
     border: 2px solid #3400c9;
     font-style: bold;
+    border-radius: 50px;
 }
 
 .next:hover {
@@ -137,4 +141,14 @@ div p a {
 .button:hover {
     color: #0050c99b;
     background: #ffffff;
+}
+
+.double{
+    display: flex;
+}
+.double div:nth-child(1) {
+    width: 35%;
+}
+.double div:nth-child(2) {
+    width: 65%;
 }

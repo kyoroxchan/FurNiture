@@ -65,13 +65,21 @@ body {
     text-align: left;
     font-size: 2em;
     line-height: 1em;
-
+    position: absolute;
+    /*自由に配置する指定*/
+    bottom: 5vh;
+    /*下寄せの指定*/
 }
 
 .goodsDetail h2 {
     text-align: right;
     font-size: 1.75em;
     margin-right: 15%;
+    position: absolute;
+    /*自由に配置する指定*/
+    bottom: 0;
+    /*下寄せの指定*/
+    right: 0;
 }
 
 .goodsDetail .info {
@@ -103,27 +111,31 @@ body {
     line-height: 8vh;
     transition: .3s;
     font-style: bold;
+    border-radius: 50px;
 }
 
 .next:hover {
-    color: #3400c9;
+    color: #0050c99b;
     background: #ffffff;
 }
 
 .edit {
-    background: #3400c9;
+    background: #0050c99b;
     color: #ffffff;
     border: 2px solid #3400c9;
 }
+
 .edit:hover {
-    color: #3400c9;
+    color: #0050c99b;
     background: #ffffff;
 }
+
 .del {
     background: red;
     color: #ffffff;
     border: 2px solid red;
 }
+
 .del:hover {
     color: red;
     background: #ffffff;

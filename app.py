@@ -838,7 +838,7 @@ def order():
     for rec in result:
         price = rec["price"]
 
-    price = f"{price:,}"
+    priceF = f"{price:,}"
 
     sql = 'SELECT * FROM user WHERE mail ="' + mail + '";'
 
@@ -859,9 +859,130 @@ def order():
         cur.close()
         con.close()
 
+    for item in userP:
+        money = item["money"]
+    moneyF = f"{money:,}"
+
+    sumMoney = int(money) - int(price)
+    sumMoneyF = f"{sumMoney:,}"
+    sumMoneyF = str(sumMoneyF)
+
     return render_template(
-        "order.html", result=result, userP=userP, price=price, res=res
+        "order.html",
+        result=result,
+        userP=userP,
+        priceF=priceF,
+        moneyF=moneyF,
+        res=res,
+        sumMoneyF=sumMoneyF,
     )
+
+
+@app.route("/orderComplete", methods=["POST"])
+def orderComplete():
+    res = {
+        "nickname": session["nickname"],
+        "icon": session["icon"],
+    }
+    gid = session["gid"]
+    mail = session["mail"]
+
+    sql = 'SELECT * FROM goods WHERE GID = "' + gid + '";'
+    result = select(sql)
+    for rec in result:
+        price = rec["price"]
+
+    sql = 'SELECT * FROM user WHERE mail ="' + mail + '";'
+    result = select(sql)
+    for rec in result:
+        money = rec["money"]
+
+    if price > money:
+        return render_template("order.html", res=res)
+
+    sql = 'SELECT * FROM masaru WHERE id ="1";'
+    result = select(sql)
+    for rec in result:
+        mMoney = rec["money"]
+
+    sumMoney = int(money) - int(price)
+    mSumMoney = int(price) * 0.1
+    masaruMoney = mMoney + mSumMoney
+    print(masaruMoney)
+    sellerMoney = int(price) * 0.9
+    print(sellerMoney)
+
+    sql = 'UPDATE user SET money = "' + str(sumMoney) + '" WHERE mail = "' + mail + '";'
+    print(sql)
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        con.commit()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    sql = 'SELECT * FROM goods WHERE gid ="' + gid + '";'
+    result = select(sql)
+    for rec in result:
+        sellerUser = rec["mail"]
+
+    sql = (
+        'UPDATE user SET money = "'
+        + str(sellerMoney)
+        + '" WHERE mail = "'
+        + sellerUser
+        + '";'
+    )
+    print(sql)
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        con.commit()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    sql = 'UPDATE masaru SET money = "' + str(masaruMoney) + '" WHERE id = "1";'
+    print(sql)
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        con.commit()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    sumMoney = f"{sumMoney:,}"
+
+    return render_template("orderComplete.html", sumMoney=sumMoney)
 
 
 # 出品者ページ-------------------------------------------------------------------------------------------

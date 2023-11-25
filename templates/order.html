@@ -28,26 +28,30 @@
                 <p class="image"><img src="/static/images/goods/{{rec.photo}}" alt=""></p>
                 <div>
                     <p>{{rec.name}}</p>
-                    <p>{{price}}円</p>
+                    <p>{{priceF}}円</p>
                     <p>{{rec.info}}</p>
                 </div>
             </div>
             {% endfor %}
-            {% for up in userP %}
+            {% for item in userP %}
             <table>
                 <tr>
                     <th>値段</th>
-                    <td>{{price}}</td>
+                    <td>{{priceF}}</td>
                 </tr>
                 <tr>
-                    <th>残高</th>
-                    <td></td>
+                    <th>現在残高</th>
+                    <td>{{moneyF}}</td>
+                </tr>
+                <tr>
+                    <th>購入後残高</th>
+                    <td>{{sumMoneyF}}</td>
                 </tr>
                 <tr>
                     <th>配送先</th>
-                    <td>{{up.pref}}{{up.addr}}{{up.home}}{{up.bname}}</td>
+                    <td>{{item.pref}}{{item.addr}}{{item.home}}{{item.bname}}</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <th>クーポン</th>
                     <td>
                         <select name="coupon">
@@ -56,8 +60,21 @@
                             <option value="30">30%OFF</option>
                         </select>
                     </td>
+                </tr> -->
+                <tr>
+
                 </tr>
             </table>
+            <div class="btnArea">
+                <form action="/orderComplete" method="post">
+                    <input type="submit" value="購入確定" class="button">
+                </form>
+            {% endfor %}
+            {% for rec in result %}
+                <form action="/detail/{{ rec['gid']}}" method="get">
+                    <input type="submit" value="キャンセル" class="button2">
+                </form>
+            </div>
             {% endfor %}
 
         </section>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品編集完了</title>
+    <link rel="stylesheet" href="/static/css/profileUpComplete.css">
+    <link rel="stylesheet" href="/static/css/nav.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+
+    <main>
+        <h1>購入手続きが完了しました</h1>
+        <p>残高{{sumMoney}}円です</p>
+        <form action="/user" method="get">
+            <input type="submit" value="プロフィール画面へ" class="button">
+        </form>
+    </main>
+</body>
+
+</html>

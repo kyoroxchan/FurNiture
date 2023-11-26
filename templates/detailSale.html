@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品ページ</title>
+    <link rel="stylesheet" href="../static/css/detail.css">
+    <link rel="stylesheet" href="/static/css/nav.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+        <div class="navArea">
+            <div>
+                <form action="#" class="search-form">
+                    <button type="submit" aria-label="検索"></button>
+                    <label>
+                        <input type="text" id="seach" class="seachText" placeholder="キーワードを入力">
+                    </label>
+                </form>
+            </div>
+            <ul class="nav">
+                <li><a href="http://localhost:5000/login">ログイン</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main>
+        <div class="wrapper">
+            {% for rec in result %}
+            <div class="leftArea">
+                <p>
+                    <img src="/static/images/goods/{{rec['photo']}}" alt="">
+                </p>
+            </div>
+            <div class="rightArea">
+                <div class="goodsDetail">
+                    <div class="nameArea">
+                        <h1>{{ rec["name"]}}</h1>
+                        <h2>{{ price }}円</h2>
+                    </div>
+                    <p class="info">{{ rec["info"]}}</p>
+                    {% endfor %}
+                    {% for user in userP %}
+                    <div class="sellerArea">
+                        <a href="http://localhost:5000/userProfile/{{ user['mail']}}">
+                            <p class="seller">
+                                <img src="/static/images/icon/{{user['icon']}}" alt="">
+                            </p>
+                            <div class="sellerUser">
+                                <p>出品者</p>
+                                <p>{{user['nick']}}</p>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    <p class="nextArea">
+                        <button class="next">売り切れました</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <section>
+        <h2>おすすめ商品</h2>
+        <div class="goodsArea">
+            <ul class="goodsGroup filter-item">
+                {% for item in goods %}
+                <li class="goods target" data-item="{{item['category']}}">
+                    <a href="http://localhost:5000/detail/{{ item['gid']}}">
+                        <div class="image">
+                            <img src="/static/images/goods/{{item['photo']}}" alt="">
+                            <p class="price">¥{{ item["price"]}}</p>
+                        </div>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    <script src="/static/js/loginAlert.js"></script>
+</body>
+
+</html>

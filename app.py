@@ -16,7 +16,7 @@ app.config["MAX_CONTENT_LENGTH"] = 8**20
 
 @app.route("/", methods=["GET"])
 def top():
-    sql = "SELECT * FROM goods ORDER BY rand();"
+    sql = "SELECT * FROM goods WHERE sale = 'ok' ORDER BY rand();"
 
     result = select(sql)
     session.pop("name", None)
@@ -468,6 +468,7 @@ def GRegisterCheck():
             os.path.join("./static/images/goods", filename)
             save_path = os.path.join("./static/images/goods/", filename)
             # ***ファイル保存***
+            img = img.resize((500, 500))
             img.save(save_path, quality=90)
             images = filename
         else:
@@ -565,6 +566,7 @@ def detail(gid):
     for rec in result:
         mail = rec["mail"]
         price = rec["price"]
+        sale = rec["sale"]
     print(mail)
     price = f"{price:,}"
 
@@ -609,6 +611,36 @@ def detail(gid):
     finally:
         cur.close()
         con.close()
+
+    if sale == "no":
+        if "nickname" in session:
+            res = {
+                "nickname": session["nickname"],
+                "icon": session["icon"],
+                "mail": session["mail"],
+            }
+            if res["mail"] == mail:
+                return render_template(
+                    "detailLoginSale.html",
+                    result=result,
+                    userP=userP,
+                    goods=goods,
+                    res=res,
+                    price=price,
+                )
+            else:
+                return render_template(
+                    "detailLoginSale.html",
+                    result=result,
+                    userP=userP,
+                    goods=goods,
+                    res=res,
+                    price=price,
+                )
+        else:
+            return render_template(
+                "detailSale.html", result=result, goods=goods, userP=userP, price=price
+            )
 
     if "nickname" in session:
         res = {
@@ -731,7 +763,7 @@ def goodsEditComplete():
             os.path.join("./static/images/goods", filename)
             save_path = os.path.join("./static/images/goods", filename)
             # ***ファイル保存***
-
+            img = img.resize((500, 500))
             img.save(save_path, quality=90)
 
         photo = filename
@@ -891,6 +923,7 @@ def orderComplete():
     result = select(sql)
     for rec in result:
         price = rec["price"]
+        photo = rec["photo"]
 
     sql = 'SELECT * FROM user WHERE mail ="' + mail + '";'
     result = select(sql)
@@ -981,6 +1014,51 @@ def orderComplete():
         con.close()
 
     sumMoney = f"{sumMoney:,}"
+
+    background_path = "./static/images/goods/" + photo + ""
+    overlay_path = "./static/images/material/soldOut.png"
+    background = Image.open(background_path)
+    overlay = Image.open(overlay_path)
+
+    # 重ね合わせる際の位置を指定
+    position = (0, 0)
+
+    # 重ね合わせる
+    background.paste(overlay, position, overlay)
+
+    savedate = datetime.now().strftime("%Y%m%d_")
+    # ***安全なファイル名に変換***
+    filename = savedate + photo
+    # ***保存用フルパス作成***
+    save_path = os.path.join("./static/images/goods", filename)
+    # ***ファイル保存***
+
+    background.save(save_path, quality=90)
+
+    sql = (
+        'UPDATE goods SET sale = "no", photo = "'
+        + filename
+        + '" WHERE gid ="'
+        + gid
+        + '";'
+    )
+    print(sql)
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        con.commit()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
 
     return render_template("orderComplete.html", sumMoney=sumMoney)
 

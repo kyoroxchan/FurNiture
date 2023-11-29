@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ページ</title>
+    <link rel="stylesheet" href="/static/css/adminUser.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <main>
+        <h1>運営の手数料</h1>
+        <form action="/administrator" method="post" class="b1">
+            <input type="submit" value="戻る" class="button">
+        </form>
+        <p class="money">{{money}}<span>円</span></p>
+    </main>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+        <script src="/static/js/effect.js"></script>
+</body>
+
+</html>

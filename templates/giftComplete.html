@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ギフトコード発行完了</title>
+    <link rel="stylesheet" href="/static/css/nav.css">
+    <link rel="stylesheet" href="/static/css/giftComplete.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+
+    <main>
+        <h1>購入手続きが完了しました</h1>
+        <p>残高{{sumMoney}}円です</p>
+        <p>{{price}}円分のプリペイドコード</p>
+        <p class="money">{{rNum}}</p>
+        <form action="/user" method="get">
+            <input type="submit" value="プロフィール画面へ" class="button">
+        </form>
+    </main>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.3.2/dist/confetti.browser.min.js"></script>
+    <script src="/static/js/effect.js"></script>
+</body>
+
+</html>

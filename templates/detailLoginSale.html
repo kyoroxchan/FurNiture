@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商品ページ</title>
-    <link rel="stylesheet" href="../static/css/detailLoginSale.css">
     <link rel="stylesheet" href="/static/css/navLogin.css">
+    <link rel="stylesheet" href="../static/css/detailLoginSale.css">
 
     <link rel="icon" type="image/png" href="/static/images/material/logo.png">
 </head>
@@ -45,6 +45,20 @@
                     </div>
                     <p class="info">{{ rec["info"]}}</p>
                     {% endfor %}
+
+                    {% if userL == 'on' %}
+                    {% for user in userP %}
+                    <div class="sellerArea">
+                        <p class="seller">
+                            <img src="/static/images/icon/{{user['icon']}}" alt="">
+                        </p>
+                        <div class="sellerUser">
+                            <p>出品者</p>
+                            <p>{{user['nick']}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
                     {% for user in userP %}
                     <div class="sellerArea">
                         <a href="http://localhost:5000/userProfile/{{ user['mail']}}">
@@ -58,6 +72,10 @@
                         </a>
                     </div>
                     {% endfor %}
+                    {% endif %}
+
+
+
                     <p class="nextArea"><a href="#" class="next">売り切れました</a></p>
                 </div>
             </div>

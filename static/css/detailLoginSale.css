@@ -23,6 +23,8 @@ body {
 }
 
 .leftArea p img {
+    border: 5px solid #5a5a5a;
+    background: white;
     height: 35vw;
     width: 35vw;
     position: absolute;
@@ -51,7 +53,7 @@ body {
 .nameArea {
     position: relative;
     width: 75%;
-    height: 12vh;
+    min-height: 15vh;
     margin: 5vh auto -.2em auto;
     background: rgba(255, 255, 255, 0.7);
     margin-bottom: 2vh;
@@ -172,7 +174,7 @@ section h2 {
 .goodsGroup {
     display: flex;
     flex-wrap: wrap;
-    width: 164vh;
+    width: 170vh;
     margin: 0 auto;
     margin-top: 3vh;
 }
@@ -186,7 +188,7 @@ section h2 {
 }
 
 .goods {
-    box-shadow: 0 0 10px black;
+    border: 5px solid black;
 }
 
 .goods .a {
@@ -217,7 +219,7 @@ section h2 {
 
 .goods .price {
     z-index: 5;
-    background: rgba(52.26, 0, 201.01, 0.76);
+    background: #FF7E73;
     width: 15vh;
     height: 5vh;
     position: absolute;

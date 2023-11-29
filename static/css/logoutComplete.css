@@ -43,16 +43,16 @@ p span {
     width: 20%;
     height: 8vh;
     padding: 8px 33px;
-    background: #0050c99b;
+    background: #FF7E73;
     color: #ffffff;
     line-height: 1em;
     transition: .3s;
-    border: 2px solid #3400c9;
+    border: 2px solid #FF7E73;
     margin-top: 5vh;
     border-radius: 50px;
 }
 
 .button:hover {
-    color: #0050c99b;
+    color: #FF7E73;
     background: #ffffff;
 }

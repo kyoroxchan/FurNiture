@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品編集</title>
+    <link rel="stylesheet" href="/static/css/payment.css">
+    <link rel="stylesheet" href="/static/css/nav.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+    <main>
+        <form action="/giftComplete" class="wrapper" method="post">
+            <h1>ギフトコード購入</h1>
+            <div class="first">
+                <h2>残高：{{money}}</h2>
+                <p class="textArea">
+                    <label>価格</label>
+                    <input type="number" name="price" class="textbox" maxlength="9" value="{{price}}">
+                    <label class="err">{{err}}</label>
+                    <input type="submit" value="発行" class="button">
+                </p>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

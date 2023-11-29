@@ -60,18 +60,18 @@ form {
 }
 
 .button:hover {
-    color: #0050c99b;
+    color: #FF7E73;
     background: #ffffff;
 }
 
 .edit {
-    background: #0050c99b;
+    background: #FF7E73;
     color: #ffffff;
-    border: 2px solid #3400c9;
+    border: 2px solid #FF7E73;
 }
 
 .edit:hover {
-    color: #0050c99b;
+    color: #FF7E73;
     background: #ffffff;
 }
 

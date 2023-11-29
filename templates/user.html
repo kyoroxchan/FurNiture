@@ -5,9 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{res.nickname}}のマイページ</title>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/css/modaal.min.css">
     <link rel="stylesheet" href="/static/css/navLogin.css">
     <link rel="stylesheet" href="../static/css/user.css">
-
     <link rel="icon" type="image/png" href="/static/images/material/logo.png">
 </head>
 
@@ -29,17 +30,21 @@
             </div>
             <div class="right">
                 <div class="moneyArea">
-                    {% for item in userP %}
-                    <p>残高<span>{{item.money}}</span>円</p>
-                    {% endfor %}
-                    <a class="button" href="http://localhost:5000/payment">残高追加</a>
+                    <p>残高：<span>{{money}}</span>円</p>
+                    <a class="button iframe-open" href="http://localhost:5000/codeList">発行履歴</a>
+
+                </div>
+                <div class="doubleBtn">
+                    <a class="button" href="http://localhost:5000/payment">コード使用</a>
+                    <a class="button" href="http://localhost:5000/giftcode">コード発行</a>
                 </div>
                 <a class="button" href="http://localhost:5000/profileUp">プロフィール編集</a>
                 <a class="button" href="http://localhost:5000/GRegister">出品する</a>
             </div>
         </div>
+
         <ul class="btnArea">
-            <li><a href="">10<span>出品</span></a></li>
+            <li><a href="">{{count}}<span>出品</span></a></li>
             <li><a href="">23<span>フォロー</span></a></li>
             <li><a href="">7<span>フォロワー</span></a></li>
         </ul>
@@ -58,6 +63,10 @@
             </ul>
         </div>
     </main>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.4/vivus.min.js"></script>
+    <script src="/static/js/topLogin.js"></script>
 </body>
 
 </html>

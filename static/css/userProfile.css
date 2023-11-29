@@ -1,0 +1,250 @@
+* {
+    margin: 0;
+    padding: 0;
+    --hover-clr: #6d6d6d;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+
+
+/* header------------------------------------------------------------------------------------------- */
+
+
+.logoutArea {
+    margin-right: 2vh;
+}
+
+.logoutBtn {
+    display: inline-block;
+    font-size: 3vh;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    height: 5vh;
+    background: red;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    margin-top: 1.5vh;
+    border: 2px solid red;
+    text-decoration: none;
+    line-height: 5vh;
+}
+
+.logoutBtn:hover {
+    color: red;
+    background: #ffffff;
+}
+
+/* main------------------------------------------------------------------------------------------- */
+main {
+    padding: 0;
+
+}
+
+.user {
+    display: flex;
+    width: 100vw;
+    height: 30vh;
+    padding-top: 15vh;
+    background: rgba(255, 255, 255, 0.7);
+
+}
+
+.left {
+    display: flex;
+    width: 70vw;
+    justify-content: center;
+}
+
+.left .imgArea {
+    height: 25vh;
+    width: 25vh;
+}
+
+.left .imgArea img {
+    height: 25vh;
+    width: 25vh;
+    border-radius: 50%;
+    border: 1px solid black;
+}
+
+.userDetail {
+    margin-left: 5vh;
+    width: 50vh;
+}
+
+.userDetail h1 {
+    font-size: 2em;
+}
+
+.userDetail p {
+    margin-top: 1vh;
+    font-size: 1.2em;
+    height: 18vh;
+    overflow-y: scroll;
+}
+
+.right {
+    width: 30vw;
+    margin: 0 0 1vh 20vh;
+}
+
+.button {
+    display: inline-block;
+    font-size: 3vh;
+    text-align: center;
+    cursor: pointer;
+    width: 60%;
+    height: 5vh;
+    padding: 8px 33px;
+    background: #FF7E73;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    border: 2px solid #FF7E73;
+    margin-top: 2vh;
+    text-decoration: none;
+    line-height: 5vh;
+    border-radius: 50px;
+}
+
+.button:hover {
+    color: #FF7E73;
+    background: #ffffff;
+}
+
+.btnArea {
+    list-style: none;
+    display: flex;
+    height: 8vh;
+    width: 100vw;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.7);
+
+}
+
+.btnArea li {
+    width: calc(33.33%);
+    text-align: center;
+    border-bottom: 1px solid black;
+    border-right: .5px solid black;
+    border-left: .5px solid black;
+}
+
+.btnArea li a {
+    height: 100%;
+    width: 100%;
+    display: block;
+    font-size: 2em;
+    text-decoration: none;
+    line-height: 5vh;
+    transition: .3s;
+    color: #000;
+}
+
+.btnArea li a span {
+    font-size: 1.3rem;
+    line-height: 2vh;
+    display: block;
+}
+
+.btnArea li a:hover {
+    font-size: 2.3em;
+}
+
+
+/* goods------------------------------------------------------------------------------------------- */
+
+
+.goodsGroup {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100vw;
+    margin: 0 auto;
+    margin-top: 3vh;
+    justify-content: center;
+}
+
+.goodsGroup .goods {
+    list-style: none;
+    height: 35vh;
+    width: 35vh;
+    margin: 3vh;
+    overflow: hidden;
+}
+
+.goods {
+    border: 5px solid #5a5a5a;
+}
+
+.goods .a {
+    height: 100%;
+    width: 100%;
+}
+
+.goods .image {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.goods .image img {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    background: white;
+}
+
+.goods .image {
+    position: relative;
+}
+
+.goods .price {
+    z-index: 5;
+    background: #FF7E73;
+    width: 15vh;
+    height: 5vh;
+    position: absolute;
+    bottom: 2%;
+    right: 0;
+    padding-right: .1em;
+    text-align: right;
+    line-height: 5vh;
+    font-size: 20px;
+    border-radius: 20px 0 0 20px;
+    color: white;
+    box-shadow: 0 0 10px black;
+}
+
+.doubleBtn{
+    display: flex;
+    width: 76%;
+    justify-content: space-around;
+}
+.doubleBtn .button{
+    font-size: 1.2em;
+    padding: 4px 16.5px;
+}
+.moneyArea{
+    display: flex;
+    width: 76%;
+}
+.moneyArea p{
+    width: 150%;
+    margin-top: 3vh;
+    font-size: 1.2em;
+}
+.moneyArea .button{
+    font-size: 1em;
+    height: 3vh;
+    line-height: 3vh;
+    padding: 8px 10px;
+}

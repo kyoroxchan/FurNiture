@@ -5,6 +5,8 @@ from PIL import Image
 from datetime import datetime
 from werkzeug.utils import secure_filename
 import os
+import random
+import string
 
 app = Flask(__name__)
 app.secret_key = "心がカギ"
@@ -178,7 +180,7 @@ def checkMail():
         cur.executemany(sql, data)
         con.commit()
 
-        print("records inserted.")
+        print("データベース追加完了")
 
     except mysql.connector.errors.ProgrammingError as e:
         print("***DB接続エラー***")
@@ -205,6 +207,9 @@ def user():
     sql = 'SELECT * FROM goods WHERE mail ="' + session["mail"] + '";'
 
     result = select(sql)
+    count = 0
+    for rec in result:
+        count = count + 1
 
     sql = 'SELECT money FROM user WHERE mail ="' + session["mail"] + '";'
 
@@ -225,6 +230,9 @@ def user():
         cur.close()
         con.close()
 
+    for up in userP:
+        money = up["money"]
+    money = f"{money:,}"
     if "nickname" in session:
         res = {
             "nickname": session["nickname"],
@@ -232,7 +240,9 @@ def user():
             "profile": session["profile"],
             "mail": session["mail"],
         }
-        return render_template("user.html", result=result, res=res, userP=userP)
+        return render_template(
+            "user.html", result=result, res=res, money=money, count=count
+        )
     else:
         return render_template("top.html", result=result)
 
@@ -372,11 +382,12 @@ def paymentComplete():
         "mail": session["mail"],
     }
     code = request.form["code"]
-    sql = 'SELECT money FROM prepaid WHERE CODE = "' + code + '";'
+    sql = 'SELECT money FROM prepaid WHERE usable = "ok" AND CODE = "' + code + '";'
 
     result = select(sql)
     if not result:
-        return render_template("payment.html", res=res)
+        err = "そのコードは存在しないか使用済みです"
+        return render_template("payment.html", res=res, err=err, code=code)
     for rec in result:
         money = rec["money"]
 
@@ -408,7 +419,139 @@ def paymentComplete():
         cur.close()
         con.close()
 
+    day = datetime.now().strftime("%Y%m%d")
+
+    sql = (
+        'UPDATE prepaid SET usable = "no",useday ="'
+        + day
+        + '" WHERE CODE = "'
+        + code
+        + '";'
+    )
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        con.commit()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
     return render_template("paymentComplete.html", res=res, money=money)
+
+
+# ギフトコード生成-------------------------------------------------------------------------------------------
+
+
+@app.route("/giftcode", methods=["GET"])
+def giftcode():
+    res = {}
+    mail = session["mail"]
+
+    sql = 'SELECT money FROM user WHERE mail ="' + mail + '";'
+
+    result = select(sql)
+    for rec in result:
+        money = rec["money"]
+    money = f"{money:,}"
+
+    return render_template("giftcode.html", res=res, money=money)
+
+
+@app.route("/giftComplete", methods=["POST"])
+def giftComplete():
+    res = {}
+    mail = session["mail"]
+    price = int(request.form["price"])
+    sql = 'SELECT money FROM user WHERE mail ="' + mail + '";'
+
+    result = select(sql)
+    for rec in result:
+        money = rec["money"]
+    if price > money:
+        err = "金額が足りません"
+        return render_template(
+            "giftcode.html", res=res, money=money, err=err, price=price
+        )
+
+    sumMoney = int(money) - int(price)
+    sql = 'UPDATE user SET money = "' + str(sumMoney) + '" WHERE mail = "' + mail + '";'
+
+    print(sql)
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        con.commit()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    rNum = generate_random_string()
+    print(rNum)
+    day = datetime.now().strftime("%Y%m%d")
+    print(day)
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        sql = """
+    INSERT INTO prepaid 
+        (code,money,issueday)
+    VALUES 
+        (%s, %s, %s)
+    """
+        data = [(rNum, price, day)]
+        cur.executemany(sql, data)
+        con.commit()
+
+        print("データベース追加完了")
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    return render_template(
+        "giftComplete.html", res=res, rNum=rNum, sumMoney=sumMoney, price=price
+    )
+
+
+# 発行履歴-------------------------------------------------------------------------------------------
+@app.route("/codeList", methods=["GET"])
+def codeList():
+    res = {}
+    mail = session["mail"]
+
+    sql = "SELECT * FROM prepaid WHERE mail = '" + mail + "';"
+    result = select(sql)
+
+    for rec in result:
+        money = rec["money"]
+    money = f"{money:,}"
+
+    return render_template("codeList.html", res=res, result=result, money=money)
 
 
 # 商品登録-------------------------------------------------------------------------------------------
@@ -530,7 +673,7 @@ def GRegisterComplete():
         cur.executemany(sql, data)
         con.commit()
 
-        print("records inserted.")
+        print("データベース追加完了")
 
     except mysql.connector.errors.ProgrammingError as e:
         print("***DB接続エラー***")
@@ -620,6 +763,7 @@ def detail(gid):
                 "mail": session["mail"],
             }
             if res["mail"] == mail:
+                userL = "on"
                 return render_template(
                     "detailLoginSale.html",
                     result=result,
@@ -627,8 +771,10 @@ def detail(gid):
                     goods=goods,
                     res=res,
                     price=price,
+                    userL=userL,
                 )
             else:
+                userL = "no"
                 return render_template(
                     "detailLoginSale.html",
                     result=result,
@@ -636,6 +782,7 @@ def detail(gid):
                     goods=goods,
                     res=res,
                     price=price,
+                    userL=userL,
                 )
         else:
             return render_template(
@@ -833,7 +980,7 @@ def goodsDelComplete():
         cur.execute(sql)
         con.commit()
 
-        print("records inserted.")
+        print("データベース追加完了")
 
     except mysql.connector.errors.ProgrammingError as e:
         print("***DB接続エラー***")
@@ -860,6 +1007,7 @@ def order():
         "nickname": session["nickname"],
         "icon": session["icon"],
     }
+    err = {}
 
     gid = session["gid"]
     mail = session["mail"]
@@ -907,6 +1055,7 @@ def order():
         moneyF=moneyF,
         res=res,
         sumMoneyF=sumMoneyF,
+        err=err,
     )
 
 
@@ -924,14 +1073,21 @@ def orderComplete():
     for rec in result:
         price = rec["price"]
         photo = rec["photo"]
+        Gmail = rec["mail"]
 
     sql = 'SELECT * FROM user WHERE mail ="' + mail + '";'
     result = select(sql)
     for rec in result:
         money = rec["money"]
 
+    sql = 'SELECT * FROM user WHERE mail ="' + Gmail + '";'
+    result = select(sql)
+    for rec in result:
+        Gmoney = rec["money"]
+
     if price > money:
-        return render_template("order.html", res=res)
+        err = "金額が足りません"
+        return render_template("orderErr.html", res=res, err=err)
 
     sql = 'SELECT * FROM masaru WHERE id ="1";'
     result = select(sql)
@@ -943,6 +1099,7 @@ def orderComplete():
     masaruMoney = mMoney + mSumMoney
     print(masaruMoney)
     sellerMoney = int(price) * 0.9
+    sellerMoney = Gmoney + sellerMoney
     print(sellerMoney)
 
     sql = 'UPDATE user SET money = "' + str(sumMoney) + '" WHERE mail = "' + mail + '";'
@@ -1093,13 +1250,19 @@ def userProfile(mail):
         cur.close()
         con.close()
 
+    count = 0
+    for rec in goods:
+        count = count + 1
+
     if "nickname" in session:
         res = {"nickname": session["nickname"], "icon": session["icon"]}
         return render_template(
-            "userProfileLogin.html", result=result, goods=goods, res=res
+            "userProfileLogin.html", result=result, goods=goods, res=res, count=count
         )
     else:
-        return render_template("userProfile.html", result=result, goods=goods)
+        return render_template(
+            "userProfile.html", result=result, goods=goods, count=count
+        )
 
 
 # お知らせ-------------------------------------------------------------------------------------------
@@ -1223,7 +1386,7 @@ def adminNewsAddComplete():
         cur.executemany(sql, data)
         con.commit()
 
-        print("records inserted.")
+        print("データベース追加完了")
 
     except mysql.connector.errors.ProgrammingError as e:
         print("***DB接続エラー***")
@@ -1238,6 +1401,26 @@ def adminNewsAddComplete():
         con.close()
 
     return render_template("adminNewsComplete.html")
+
+
+@app.route("/adminMoney", methods=["GET"])
+def adminMoney():
+    sql = "SELECT * FROM masaru;"
+
+    result = select(sql)
+    for rec in result:
+        money = f"{rec['money']:,}"
+
+    return render_template("adminMoney.html", money=money)
+
+
+@app.route("/adminPrepaid", methods=["GET"])
+def adminPrepaid():
+    sql = "SELECT * FROM prepaid;"
+
+    result = select(sql)
+
+    return render_template("adminPrepaid.html", result)
 
 
 # DB接続-------------------------------------------------------------------------------------------
@@ -1271,7 +1454,7 @@ def select(sql):
 
 
 def extension_check(filename):
-    Extension = ["jpg", "png", "gif"]
+    Extension = ["jpg", "jpeg", "png", "gif"]
 
     if "." in filename:
         ext = filename.rsplit(".", 1)[1]
@@ -1301,6 +1484,14 @@ def crop_center(pil_img, crop_width, crop_height):
 
 def crop_max_square(pil_img):
     return crop_center(pil_img, min(pil_img.size), min(pil_img.size))
+
+
+def generate_random_string():
+    # 英数字大文字の文字列を生成
+    characters = string.ascii_uppercase + string.digits
+    # 9桁のランダムな文字列を生成
+    random_string = "".join(random.choice(characters) for _ in range(9))
+    return random_string
 
 
 @app.errorhandler(413)

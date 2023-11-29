@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ページ</title>
+    <link rel="stylesheet" href="/static/css/adminUser.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <main>
+        <h1>プリペイドコード情報</h1>
+        <form action="/administrator" method="post" class="b1">
+            <input type="submit" value="戻る" class="button">
+        </form>
+        <div class="listArea">
+            <table border="1" style="width: 200vw;">
+                <tr>
+                    <th>ID</th>
+                    <th>使用可/不可</th>
+                    <th>料金</th>
+                    <th>コード</th>
+                </tr>
+                {% for rec in result %}
+                <tr>
+                    <td>{{rec.id}}</td>
+                    <td>{{rec.usable}}</td>
+                    <td>{{rec.money}}</td>
+                    <td>{{rec.code}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+</body>
+
+</html>

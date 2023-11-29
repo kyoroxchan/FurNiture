@@ -90,7 +90,7 @@ main {
 
 .right {
     width: 30vw;
-    margin: -5vh 0 1vh 20vh;
+    margin: -8vh 0 1vh 20vh;
 }
 
 .button {
@@ -101,11 +101,11 @@ main {
     width: 60%;
     height: 5vh;
     padding: 8px 33px;
-    background: #0050c99b;
+    background: #FF7E73;
     color: #ffffff;
     line-height: 1em;
     transition: .3s;
-    border: 2px solid #3600c99b;
+    border: 2px solid #FF7E73;
     margin-top: 2vh;
     text-decoration: none;
     line-height: 5vh;
@@ -113,7 +113,7 @@ main {
 }
 
 .button:hover {
-    color: #0050c99b;
+    color: #FF7E73;
     background: #ffffff;
 }
 
@@ -178,7 +178,7 @@ main {
 }
 
 .goods {
-    box-shadow: 0 0 10px black;
+    border: 5px solid #5a5a5a;
 }
 
 .goods .a {
@@ -209,7 +209,7 @@ main {
 
 .goods .price {
     z-index: 5;
-    background: rgba(52.26, 0, 201.01, 0.76);
+    background: #FF7E73;
     width: 15vh;
     height: 5vh;
     position: absolute;
@@ -224,4 +224,27 @@ main {
     box-shadow: 0 0 10px black;
 }
 
-.moneyArea {}
+.doubleBtn{
+    display: flex;
+    width: 76%;
+    justify-content: space-around;
+}
+.doubleBtn .button{
+    font-size: 1.2em;
+    padding: 4px 16.5px;
+}
+.moneyArea{
+    display: flex;
+    width: 76%;
+}
+.moneyArea p{
+    width: 150%;
+    margin-top: 3vh;
+    font-size: 1.2em;
+}
+.moneyArea .button{
+    font-size: 1em;
+    height: 3vh;
+    line-height: 3vh;
+    padding: 8px 10px;
+}

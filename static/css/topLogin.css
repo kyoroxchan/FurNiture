@@ -49,7 +49,7 @@ main {
 .goodsGroup {
     display: flex;
     flex-wrap: wrap;
-    width: 164vh;
+    width: 170vh;
     margin: 0 auto;
     margin-top: 3vh;
 }
@@ -63,7 +63,7 @@ main {
 }
 
 .goods {
-    box-shadow: 0 0 10px black;
+    border: 5px solid #5a5a5a;
 }
 
 .goods .a {
@@ -94,7 +94,7 @@ main {
 
 .goods .price {
     z-index: 5;
-    background: rgba(52.26, 0, 201.01, 0.76);
+    background: #FF7E73;
     width: 15vh;
     height: 5vh;
     position: absolute;
@@ -157,7 +157,7 @@ main {
     width: 100%;
     height: 100%;
     z-index: 999;
-    background: hsl(206.13deg 100% 68.04%);
+    background: #EFEBE5;
     text-align: center;
     color: #fff;
 }
@@ -209,6 +209,7 @@ main {
     width: 60vw;
     /*スライダー内の画像を60vwにしてレスポンシブ化*/
     height: 20vw;
+    border: 2px solid #5a5a5a;
 }
 
 .slider .slick-slide {
@@ -240,9 +241,9 @@ main {
     /*マウスカーソルを指マークに*/
     outline: none;
     /*クリックをしたら出てくる枠線を消す*/
-    border-top: 2px solid #666;
+    border-top: 2px solid #FF7E73;
     /*矢印の色*/
-    border-right: 2px solid #666;
+    border-right: 2px solid #FF7E73;
     /*矢印の色*/
     height: 15px;
     width: 15px;
@@ -286,6 +287,6 @@ main {
 }
 
 .slick-dots .slick-active button {
-    background: #333;
+    background: #FF7E73;
     /*ドットボタンの現在地表示の色*/
 }

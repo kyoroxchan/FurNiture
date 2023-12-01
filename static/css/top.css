@@ -38,7 +38,6 @@ main {
 
 .goodsArea {
     width: 88vw;
-    margin-left: 12vw;
 }
 
 .goodsGroup {
@@ -108,9 +107,10 @@ main {
 .category {
     z-index: 10;
     width: 12vw;
-    height: 45vh;
-    position: fixed;
-    bottom: 0;
+    height: 20vh;
+    position: sticky;
+    top: 8vh;
+    left: 0;
 }
 
 
@@ -118,6 +118,7 @@ main {
     text-align: center;
     background: #eee;
     border: 2px solid #fff;
+    width: 8vw;
     padding: 10px;
     cursor: pointer;
     transition: all 0.3s;

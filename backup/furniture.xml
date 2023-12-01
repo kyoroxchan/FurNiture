@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+- phpMyAdmin XML Dump
+- version 5.2.1
+- https://www.phpmyadmin.net
+-
+- ホスト: 127.0.0.1
+- 生成日時: 2023-11-29 17:20:54
+- サーバのバージョン： 10.4.28-MariaDB
+- PHP のバージョン: 8.2.4
+-->
+
+<pma_xml_export version="1.0" xmlns:pma="https://www.phpmyadmin.net/some_doc_url/">
+    <!--
+    - Structure schemas
+    -->
+    <pma:structure_schemas>
+        <pma:database name="furniture" collation="utf8mb4_general_ci" charset="utf8mb4">
+            <pma:table name="admin">
+                CREATE TABLE `admin` (
+                  `id` varchar(12) NOT NULL,
+                  `pass` varchar(12) NOT NULL,
+                  PRIMARY KEY (`id`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="goods">
+                CREATE TABLE `goods` (
+                  `gid` int(6) NOT NULL AUTO_INCREMENT,
+                  `name` varchar(30) NOT NULL,
+                  `photo` varchar(100) NOT NULL DEFAULT &#039;unknownGoods.jpeg&#039;,
+                  `price` int(9) NOT NULL,
+                  `info` varchar(200) NOT NULL,
+                  `category` varchar(10) NOT NULL,
+                  `mail` varchar(50) NOT NULL,
+                  `sale` varchar(10) NOT NULL DEFAULT &#039;ok&#039;,
+                  PRIMARY KEY (`gid`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="masaru">
+                CREATE TABLE `masaru` (
+                  `mid` int(1) NOT NULL AUTO_INCREMENT,
+                  `money` int(21) NOT NULL,
+                  PRIMARY KEY (`mid`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="news">
+                CREATE TABLE `news` (
+                  `nid` int(6) NOT NULL AUTO_INCREMENT,
+                  `title` varchar(20) NOT NULL,
+                  `data` varchar(100) NOT NULL,
+                  `day` date NOT NULL,
+                  PRIMARY KEY (`nid`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="prepaid">
+                CREATE TABLE `prepaid` (
+                  `code` varchar(9) NOT NULL,
+                  `money` int(11) NOT NULL DEFAULT 0,
+                  `usable` varchar(12) NOT NULL DEFAULT &#039;ok&#039;,
+                  `issueday` date NOT NULL,
+                  `useday` date NOT NULL,
+                  `mail` varchar(40) NOT NULL,
+                  PRIMARY KEY (`code`)
+                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+            <pma:table name="user">
+                CREATE TABLE `user` (
+                  `id` int(6) NOT NULL AUTO_INCREMENT,
+                  `mail` varchar(40) NOT NULL,
+                  `pass` varchar(20) NOT NULL,
+                  `nick` varchar(20) NOT NULL,
+                  `mei` varchar(6) NOT NULL,
+                  `mei2` varchar(12) NOT NULL,
+                  `sei` varchar(6) NOT NULL,
+                  `sei2` varchar(12) NOT NULL,
+                  `post` int(7) NOT NULL,
+                  `pref` varchar(4) NOT NULL,
+                  `addr` varchar(50) NOT NULL,
+                  `home` varchar(10) NOT NULL,
+                  `bname` varchar(50) NOT NULL,
+                  `phone` int(11) NOT NULL,
+                  `sex` varchar(10) NOT NULL,
+                  `news` varchar(10) NOT NULL,
+                  `icon` varchar(100) NOT NULL DEFAULT &#039;unknownUser.jpg&#039;,
+                  `profile` varchar(100) NOT NULL,
+                  `money` int(9) NOT NULL,
+                  PRIMARY KEY (`id`,`mail`)
+                ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+            </pma:table>
+        </pma:database>
+    </pma:structure_schemas>
+
+    <!--
+    - データベース: 'furniture'
+    -->
+    <database name="furniture">
+        <!-- テーブル admin -->
+        <table name="admin">
+            <column name="id">123456</column>
+            <column name="pass">admin</column>
+        </table>
+        <!-- テーブル goods -->
+        <table name="goods">
+            <column name="gid">1</column>
+            <column name="name">土</column>
+            <column name="photo">20231129_214859_t-019.jpg</column>
+            <column name="price">5200</column>
+            <column name="info">土だお。ほんとだお。</column>
+            <column name="category">material</column>
+            <column name="mail">test@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">2</column>
+            <column name="name">大木</column>
+            <column name="photo">20231129_220436_992ad18c6c7689112ad0ec2dfe3ec4c0.jpg</column>
+            <column name="price">24000</column>
+            <column name="info">とっても大きな木だお。ほんとだお。</column>
+            <column name="category">material</column>
+            <column name="mail">test@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">3</column>
+            <column name="name">石たち</column>
+            <column name="photo">20231129_223703_Stone_IMAG1030.jpg</column>
+            <column name="price">2499</column>
+            <column name="info">たくさんの石だお。ほんとだお。</column>
+            <column name="category">material</column>
+            <column name="mail">test@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">4</column>
+            <column name="name">T字工具</column>
+            <column name="photo">20231129_224051_TIsq2flmE7gY.jpg</column>
+            <column name="price">5600</column>
+            <column name="info">T字の工具です</column>
+            <column name="category">tools</column>
+            <column name="mail">test2@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">5</column>
+            <column name="name">ニッパーとか</column>
+            <column name="photo">20231129_224123_i-img1175x1200-169771867993804oip2.jpg</column>
+            <column name="price">1200</column>
+            <column name="info">ニッパーなどのセット売りです</column>
+            <column name="category">tools</column>
+            <column name="mail">test2@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">6</column>
+            <column name="name">金槌</column>
+            <column name="photo">20231129_224210_m72254433595_1.jpg</column>
+            <column name="price">980</column>
+            <column name="info">普通の金槌です</column>
+            <column name="category">tools</column>
+            <column name="mail">test2@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">7</column>
+            <column name="name">グルーガン</column>
+            <column name="photo">20231129_224250_i-img1200x1200-1693202387636lc60di.jpg</column>
+            <column name="price">820</column>
+            <column name="info">グルーガンです。グルー四本つけます</column>
+            <column name="category">tools</column>
+            <column name="mail">test2@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">8</column>
+            <column name="name">おソファーですわぁ！！</column>
+            <column name="photo">20231129_224630_MicrosoftTeams-image.png</column>
+            <column name="price">0</column>
+            <column name="info">ただですわぁ！！</column>
+            <column name="category">chair</column>
+            <column name="mail">test3@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">9</column>
+            <column name="name">おシャンデリアですわぁ！！</column>
+            <column name="photo">20231129_224704_MicrosoftTeams-image_1.png</column>
+            <column name="price">0</column>
+            <column name="info">ただですわぁ！！</column>
+            <column name="category">other</column>
+            <column name="mail">test3@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">10</column>
+            <column name="name">お家ですわぁ！！</column>
+            <column name="photo">20231129_224735_i-img1106x1200-1694088484664qaynvb.jpg</column>
+            <column name="price">0</column>
+            <column name="info">ただですわぁ！！</column>
+            <column name="category">other</column>
+            <column name="mail">test3@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">11</column>
+            <column name="name">Pig Table</column>
+            <column name="photo">20231129_225658_201901231747232409.jpg</column>
+            <column name="price">569999</column>
+            <column name="info">おとぎ話の召使いのように配膳を行うブタのテーブルです。</column>
+            <column name="category">table</column>
+            <column name="mail">test4@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">12</column>
+            <column name="name">Rabbit Lamp</column>
+            <column name="photo">20231129_225812_jpg65613e22e9a15_EC-15160.jpg</column>
+            <column name="price">129999</column>
+            <column name="info">ウサギを忠実に再現したテーブルランプ</column>
+            <column name="category">other</column>
+            <column name="mail">test4@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">13</column>
+            <column name="name">Horse Lamp</column>
+            <column name="photo">20231129_230043_jpg649948d48d917_EC-14771.jpg</column>
+            <column name="price">1059999</column>
+            <column name="info">馬のリアルなスケール感を忠実に表現した照明</column>
+            <column name="category">other</column>
+            <column name="mail">test4@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">14</column>
+            <column name="name">青い椅子</column>
+            <column name="photo">20231129_230733_i-img1200x1200-1699952661121fhyj33.jpg</column>
+            <column name="price">8500</column>
+            <column name="info">青い椅子です。特徴は青いことです</column>
+            <column name="category">chair</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">15</column>
+            <column name="name">青い座椅子</column>
+            <column name="photo">20231129_230842_i-img900x1200-1699173416958v0w28r.jpg</column>
+            <column name="price">4599</column>
+            <column name="info">青い座椅子です。特徴は青いことです</column>
+            <column name="category">chair</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">16</column>
+            <column name="name">オレンジの椅子</column>
+            <column name="photo">20231129_230943_i-img783x992-1701057404ccbvtb7.jpg</column>
+            <column name="price">2499</column>
+            <column name="info">オレンジの椅子です。特徴はオレンジが使われていることです</column>
+            <column name="category">chair</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">17</column>
+            <column name="name">古い椅子</column>
+            <column name="photo">20231129_231035_i-img900x1200-1700994789617ryw834.jpg</column>
+            <column name="price">12599</column>
+            <column name="info">古い椅子です。歴史を感じます</column>
+            <column name="category">chair</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">18</column>
+            <column name="name">木の机</column>
+            <column name="photo">20231129_231133_i-img1200x1200-170090088173344807u_1.jpg</column>
+            <column name="price">3450</column>
+            <column name="info">よくある机です。特徴は四つ足なことです</column>
+            <column name="category">table</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">19</column>
+            <column name="name">勉強机</column>
+            <column name="photo">20231129_231220_i-img1200x1200-1696755215189d095ku.jpg</column>
+            <column name="price">14500</column>
+            <column name="info">勉強机です。特徴は勉強に使える事です</column>
+            <column name="category">table</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">20</column>
+            <column name="name">厚い机</column>
+            <column name="photo">20231129_231312_i-img1200x841-1685275638gll9nl117344.jpg</column>
+            <column name="price">1599</column>
+            <column name="info">厚い机です。特徴は高さが低いことです</column>
+            <column name="category">table</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">21</column>
+            <column name="name">丸い机</column>
+            <column name="photo">20231129_231404_m53728870480_1.jpg</column>
+            <column name="price">7100</column>
+            <column name="info">丸い机です。特徴は複数人で使いやすことです</column>
+            <column name="category">table</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">22</column>
+            <column name="name">木の板</column>
+            <column name="photo">20231129_231557_7152OBre3EL._AC_UF8941000_QL80_.jpg</column>
+            <column name="price">999</column>
+            <column name="info">木の板です。特徴は色々なことに使えることです</column>
+            <column name="category">material</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">23</column>
+            <column name="name">アンパンマンの椅子</column>
+            <column name="photo">20231129_231701_C7730621.jpg</column>
+            <column name="price">3200</column>
+            <column name="info">アンパンマンの椅子です。特徴は子供向けなことです</column>
+            <column name="category">chair</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">24</column>
+            <column name="name">猫の置物</column>
+            <column name="photo">20231129_231822_61t87wgZBHLACSL1500.jpg</column>
+            <column name="price">580</column>
+            <column name="info">猫の置物です。特徴は宇宙服を着ていることです</column>
+            <column name="category">other</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <table name="goods">
+            <column name="gid">25</column>
+            <column name="name">ニッパーandペンチ</column>
+            <column name="photo">20231129_231924_m72929240621_1.jpg</column>
+            <column name="price">220</column>
+            <column name="info">ニッパーとペンチです。特徴はミニサイズなことです</column>
+            <column name="category">tools</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="sale">ok</column>
+        </table>
+        <!-- テーブル masaru -->
+        <table name="masaru">
+            <column name="mid">1</column>
+            <column name="money">0</column>
+        </table>
+        <!-- テーブル news -->
+        <table name="news">
+            <column name="nid">1</column>
+            <column name="title">FurNiture</column>
+            <column name="data">FurNitureサイトオープン</column>
+            <column name="day">2023-11-29</column>
+        </table>
+        <!-- テーブル prepaid -->
+        <table name="prepaid">
+            <column name="code">BWH1KVA15</column>
+            <column name="money">2000</column>
+            <column name="usable">ok</column>
+            <column name="issueday">2023-11-30</column>
+            <column name="useday">0000-00-00</column>
+            <column name="mail">takashi@gmail.com</column>
+        </table>
+        <!-- テーブル user -->
+        <table name="user">
+            <column name="id">1</column>
+            <column name="mail">test@gmail.com</column>
+            <column name="pass">test</column>
+            <column name="nick">ケビン</column>
+            <column name="mei">権左衛門</column>
+            <column name="mei2">ゴンザエモン</column>
+            <column name="sei">岩井</column>
+            <column name="sei2">イワイ</column>
+            <column name="post">831519</column>
+            <column name="pref">熊本県</column>
+            <column name="addr">熊本市</column>
+            <column name="home">21-51</column>
+            <column name="bname">山奥のお家</column>
+            <column name="phone">2147483647</column>
+            <column name="sex">男</column>
+            <column name="news">受け取らない</column>
+            <column name="icon">20231129_214324_4466151751_f0df205cb5_o.jpg</column>
+            <column name="profile">ケビンだお。ほんとだお。</column>
+            <column name="money">10000</column>
+        </table>
+        <table name="user">
+            <column name="id">2</column>
+            <column name="mail">test2@gmail.com</column>
+            <column name="pass">test</column>
+            <column name="nick">齋藤</column>
+            <column name="mei">最中</column>
+            <column name="mei2">モナカ</column>
+            <column name="sei">伊藤</column>
+            <column name="sei2">イトウ</column>
+            <column name="post">9891212</column>
+            <column name="pref">東京都</column>
+            <column name="addr">銀座</column>
+            <column name="home">92-122</column>
+            <column name="bname">都会すぎるタワー</column>
+            <column name="phone">2147483647</column>
+            <column name="sex">男</column>
+            <column name="news">受け取らない</column>
+            <column name="icon">20231129_224020_alphard_pc_1.jpg</column>
+            <column name="profile">適当に工具売ります</column>
+            <column name="money">0</column>
+        </table>
+        <table name="user">
+            <column name="id">3</column>
+            <column name="mail">test3@gmail.com</column>
+            <column name="pass">test</column>
+            <column name="nick">壱百満天原サロメ</column>
+            <column name="mei">押売</column>
+            <column name="mei2">オシウリ</column>
+            <column name="sei">只野</column>
+            <column name="sei2">タダノ</column>
+            <column name="post">2141245</column>
+            <column name="pref">広島県</column>
+            <column name="addr">広島市</column>
+            <column name="home">35-37</column>
+            <column name="bname">在庫倉庫</column>
+            <column name="phone">2147483647</column>
+            <column name="sex">女</column>
+            <column name="news">受け取らない</column>
+            <column name="icon">20231129_224548_NlPBD2mQ_400x400.jpg</column>
+            <column name="profile">育ちは一般家庭ですわ。</column>
+            <column name="money">0</column>
+        </table>
+        <table name="user">
+            <column name="id">4</column>
+            <column name="mail">test4@gmail.com</column>
+            <column name="pass">test</column>
+            <column name="nick">鹿鳴館キリコ</column>
+            <column name="mei">乙女</column>
+            <column name="mei2">オトメ</column>
+            <column name="sei">早乙女</column>
+            <column name="sei2">サオトメ</column>
+            <column name="post">2141264</column>
+            <column name="pref">北海道</column>
+            <column name="addr">横浜市</column>
+            <column name="home">123-456</column>
+            <column name="bname">別荘</column>
+            <column name="phone">2147483647</column>
+            <column name="sex">女</column>
+            <column name="news">受け取る</column>
+            <column name="icon">20231129_225900_keia.jpeg</column>
+            <column name="profile">ご機嫌ヨークシャテリア</column>
+            <column name="money">0</column>
+        </table>
+        <table name="user">
+            <column name="id">5</column>
+            <column name="mail">takashi@gmail.com</column>
+            <column name="pass">test</column>
+            <column name="nick">たかし(42)</column>
+            <column name="mei">征十郎</column>
+            <column name="mei2">セイジュウロウ</column>
+            <column name="sei">中村</column>
+            <column name="sei2">ナカムラ</column>
+            <column name="post">7881782</column>
+            <column name="pref">北海道</column>
+            <column name="addr">十勝</column>
+            <column name="home">1-1</column>
+            <column name="bname">あの建物</column>
+            <column name="phone">2147483647</column>
+            <column name="sex">男</column>
+            <column name="news">受け取らない</column>
+            <column name="icon">20231129_230639_c91739359c8c9e29e6bb2da5c4fbc6ba_t.jpeg</column>
+            <column name="profile">出品メインでやっていきます</column>
+            <column name="money">110000</column>
+        </table>
+    </database>
+</pma_xml_export>

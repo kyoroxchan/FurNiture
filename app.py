@@ -28,6 +28,7 @@ def top():
     session.pop("gid", None)
     session.pop("photo", None)
     session.pop("id", None)
+    session.pop("order", None)
 
     if "nickname" in session:
         res = {"icon": session["icon"]}
@@ -204,6 +205,7 @@ def checkMail():
 
 @app.route("/user", methods=["GET"])
 def user():
+    session.pop("code", None)
     sql = 'SELECT * FROM goods WHERE mail ="' + session["mail"] + '";'
 
     result = select(sql)
@@ -454,6 +456,7 @@ def paymentComplete():
 @app.route("/giftcode", methods=["GET"])
 def giftcode():
     res = {}
+    session.pop("code", None)
     mail = session["mail"]
 
     sql = 'SELECT money FROM user WHERE mail ="' + mail + '";'
@@ -470,6 +473,17 @@ def giftcode():
 def giftComplete():
     res = {}
     mail = session["mail"]
+
+    if "code" in session:
+        sql = 'SELECT money FROM user WHERE mail ="' + mail + '";'
+
+        result = select(sql)
+        for rec in result:
+            money = rec["money"]
+        money = f"{money:,}"
+        session.pop("code", None)
+        return render_template("giftcode.html", res=res, money=money)
+
     price = int(request.form["price"])
     sql = 'SELECT money FROM user WHERE mail ="' + mail + '";'
 
@@ -512,11 +526,11 @@ def giftComplete():
         cur = con.cursor(dictionary=True)
         sql = """
     INSERT INTO prepaid 
-        (code,money,issueday)
+        (code,money,issueday,mail)
     VALUES 
-        (%s, %s, %s)
+        (%s, %s, %s, %s)
     """
-        data = [(rNum, price, day)]
+        data = [(rNum, price, day, mail)]
         cur.executemany(sql, data)
         con.commit()
 
@@ -533,6 +547,7 @@ def giftComplete():
         cur.close()
         con.close()
 
+    session["code"] = rNum
     return render_template(
         "giftComplete.html", res=res, rNum=rNum, sumMoney=sumMoney, price=price
     )
@@ -546,14 +561,46 @@ def codeList():
 
     sql = "SELECT * FROM prepaid WHERE mail = '" + mail + "';"
     result = select(sql)
+    if result:
+        for rec in result:
+            money = rec["money"]
+            money = f"{money:,}"
+            return render_template("codeList.html", res=res, result=result, money=money)
 
-    for rec in result:
-        money = rec["money"]
-    money = f"{money:,}"
-
-    return render_template("codeList.html", res=res, result=result, money=money)
+    return render_template("codeList.html", res=res, result=result)
 
 
+# 購入履歴-------------------------------------------------------------------------------------------
+@app.route("/history", methods=["GET"])
+def history():
+    res = {}
+    mail = session["mail"]
+
+    sql = "SELECT * FROM goods WHERE sale = '" + mail + "';"
+    result = select(sql)
+    if result:
+        for rec in result:
+            price = rec["price"]
+            price = f"{price:,}"
+            return render_template("history.html", res=res, result=result, price=price)
+
+    return render_template("history.html", res=res, result=result)
+
+# お気に入りリスト-------------------------------------------------------------------------------------------
+@app.route("/favoriteList", methods=["GET"])
+def favoriteList():
+    res = {}
+    mail = session["mail"]
+    sql = "SELECT goods.gid,goods.photo,goods.name,goods.price,goods.info FROM goods JOIN favorite ON goods.gid = favorite.gid WHERE favorite.mail = '" + mail + "' ORDER BY gid DESC;"
+
+    result = select(sql)
+    if result:
+        for rec in result:
+            price = rec["price"]
+            price = f"{price:,}"
+            return render_template("favoriteList.html", res=res, result=result, price=price)
+
+    return render_template("favoriteList.html", res=res, result=result)
 # 商品登録-------------------------------------------------------------------------------------------
 
 
@@ -650,15 +697,15 @@ def GRegisterComplete():
     }
 
     result = session.copy()
-
+    day = datetime.now().strftime("%Y%m%d")
     try:
         con = con_db()
         cur = con.cursor(dictionary=True)
         sql = """
     INSERT INTO goods 
-        (name,photo,price,info,category,mail)
+        (name,photo,price,info,category,mail,registerday)
     VALUES 
-        (%s, %s, %s, %s, %s, %s)
+        (%s, %s, %s, %s, %s, %s, %s)
     """
         data = [
             (
@@ -668,6 +715,7 @@ def GRegisterComplete():
                 result["info"],
                 result["category"],
                 session["mail"],
+                day,
             )
         ]
         cur.executemany(sql, data)
@@ -702,6 +750,7 @@ def GRegisterComplete():
 @app.route("/detail/<gid>", methods=["GET"])
 def detail(gid):
     session.pop("gid", None)
+    session.pop("order", None)
     sql = 'SELECT * FROM goods WHERE GID = "' + gid + '";'
 
     result = select(sql)
@@ -755,7 +804,7 @@ def detail(gid):
         cur.close()
         con.close()
 
-    if sale == "no":
+    if not sale == "ok":
         if "nickname" in session:
             res = {
                 "nickname": session["nickname"],
@@ -805,6 +854,43 @@ def detail(gid):
                 price=price,
             )
         else:
+            uMail = session["mail"]
+            sql = (
+                "SELECT * FROM favorite WHERE mail = '"
+                + uMail
+                + "' AND gid = '"
+                + gid
+                + "';"
+            )
+
+            try:
+                con = con_db()
+                cur = con.cursor(dictionary=True)
+                cur.execute(sql)
+                favo = cur.fetchall()
+            except mysql.connector.errors.ProgrammingError as e:
+                print("***DB接続エラー***")
+                print(type(e))
+                print(e)
+            except Exception as e:
+                print("***システム運行プログラムエラー***")
+                print(type(e))
+                print(e)
+            finally:
+                cur.close()
+                con.close()
+            for tog in favo:
+                toggle = tog["toggle"]
+            if favo:
+                return render_template(
+                    "detailLogin.html",
+                    result=result,
+                    userP=userP,
+                    goods=goods,
+                    res=res,
+                    price=price,
+                    toggle=toggle,
+                )
             return render_template(
                 "detailLogin.html",
                 result=result,
@@ -817,6 +903,161 @@ def detail(gid):
         return render_template(
             "detail.html", result=result, goods=goods, userP=userP, price=price
         )
+
+
+# 商品お気に入り登録-------------------------------------------------------------------------------------------
+
+
+@app.route("/favorite/<fa>", methods=["GET"])
+def favorite(fa):
+    uMail = session["mail"]
+    gid = session["gid"]
+    res = {
+        "nickname": session["nickname"],
+        "icon": session["icon"],
+        "mail": session["mail"],
+    }
+
+    if fa == "on":
+        try:
+            con = con_db()
+            cur = con.cursor(dictionary=True)
+            sql = """
+        INSERT INTO favorite 
+            (gid,mail)
+        VALUES 
+            (%s, %s)
+        """
+            data = [(gid, uMail)]
+            cur.executemany(sql, data)
+            con.commit()
+
+            print("データベース追加完了")
+
+        except mysql.connector.errors.ProgrammingError as e:
+            print("***DB接続エラー***")
+            print(type(e))
+            print(e)
+        except Exception as e:
+            print("***システム運行プログラムエラー***")
+            print(type(e))
+            print(e)
+        finally:
+            cur.close()
+            con.close()
+    else:
+        try:
+            con = con_db()
+            cur = con.cursor(dictionary=True)
+            sql = "DELETE FROM favorite WHERE mail = '"+ uMail+ "' AND gid = '"+ gid+ "';"
+            cur.execute(sql)
+            con.commit()
+
+            print("データベース削除完了")
+
+        except mysql.connector.errors.ProgrammingError as e:
+            print("***DB接続エラー***")
+            print(type(e))
+            print(e)
+        except Exception as e:
+            print("***システム運行プログラムエラー***")
+            print(type(e))
+            print(e)
+        finally:
+            cur.close()
+            con.close()
+
+    sql = 'SELECT * FROM goods WHERE GID = "' + gid + '";'
+
+    result = select(sql)
+
+    for rec in result:
+        mail = rec["mail"]
+        price = rec["price"]
+    print(mail)
+    price = f"{price:,}"
+
+    sql = 'SELECT nick,icon,mail FROM user WHERE mail ="' + mail + '";'
+
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        userP = cur.fetchall()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    print(userP)
+
+    session["gid"] = gid
+
+    sql = "SELECT * FROM goods ORDER BY rand() LIMIT 8;"
+
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        goods = cur.fetchall()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+    sql = "SELECT * FROM favorite WHERE mail = '" + uMail + "' AND gid = '" + gid + "';"
+
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        favo = cur.fetchall()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+    for tog in favo:
+        toggle = tog["toggle"]
+    if favo:
+        return render_template(
+            "detailLogin.html",
+            result=result,
+            userP=userP,
+            goods=goods,
+            res=res,
+            price=price,
+            toggle=toggle,
+        )
+    return render_template(
+        "detailLogin.html",
+        result=result,
+        userP=userP,
+        goods=goods,
+        res=res,
+        price=price,
+    )
+
+    return render_template("detail.html", result=result)
 
 
 # 商品編集-------------------------------------------------------------------------------------------
@@ -1067,6 +1308,9 @@ def orderComplete():
     }
     gid = session["gid"]
     mail = session["mail"]
+    if "order" in session:
+        err = "購入済みです"
+        return render_template("orderErr.html", res=res, err=err)
 
     sql = 'SELECT * FROM goods WHERE GID = "' + gid + '";'
     result = select(sql)
@@ -1089,7 +1333,7 @@ def orderComplete():
         err = "金額が足りません"
         return render_template("orderErr.html", res=res, err=err)
 
-    sql = 'SELECT * FROM masaru WHERE id ="1";'
+    sql = 'SELECT * FROM masaru WHERE mid ="1";'
     result = select(sql)
     for rec in result:
         mMoney = rec["money"]
@@ -1191,11 +1435,16 @@ def orderComplete():
     # ***ファイル保存***
 
     background.save(save_path, quality=90)
+    day = datetime.now().strftime("%Y%m%d")
 
     sql = (
-        'UPDATE goods SET sale = "no", photo = "'
+        'UPDATE goods SET sale = "'
+        + mail
+        + '", photo = "'
         + filename
-        + '" WHERE gid ="'
+        + '", purchaseday = "'
+        + day
+        + '"WHERE gid ="'
         + gid
         + '";'
     )
@@ -1216,6 +1465,8 @@ def orderComplete():
     finally:
         cur.close()
         con.close()
+
+    session["order"] = "on"
 
     return render_template("orderComplete.html", sumMoney=sumMoney)
 

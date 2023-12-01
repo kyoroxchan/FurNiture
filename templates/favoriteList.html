@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お気に入り</title>
+    <link rel="stylesheet" href="/static/css/navLogin.css">
+    <link rel="stylesheet" href="/static/css/history.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+    <h1>お気に入り</h1>
+    <div class="listArea">
+        <table border="1">
+            <tr>
+                <th style="width: 10%;">商品画像</th>
+                <th style="width: 15%;">商品名</th>
+                <th style="width: 8%;">価格</th>
+                <th style="width: 20%;">商品説明</th>
+                <th style="width: 8%;">ページへ</th>
+            </tr>
+            {% for rec in result %}
+            <tr>
+                <td><img src="/static/images/goods/{{rec.photo}}" alt=""></td>
+                <td>{{rec.name}}</td>
+                <td>{{price}}円</td>
+                <td>{{rec.info}}</td>
+                <td><a href="http://localhost:5000/detail/{{ rec['gid']}}">ページへ</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+
+</html>

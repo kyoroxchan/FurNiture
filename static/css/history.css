@@ -10,7 +10,8 @@ h1 {
     padding-bottom: 2vh;
 }
 
-.listArea {}
+.listArea {
+}
 
 table {
     background: rgba(255, 255, 255, 0.697);
@@ -23,34 +24,30 @@ th {
     background-color: white;
     position: sticky;
     top: 0;
-}
-
-tr {
     height: 8vh;
 }
 
-td {
+td{
     text-align: center;
+    height: 16vh;
+
 }
 
 img {
-    height: 8vh;
+    height: 16vh;
 }
-
-form {
+form{
     position: absolute;
     z-index: 1;
     top: 2vh;
 }
 
-.b1 {
+.b1{
     left: 5vh;
 }
-
-.b2 {
+.b2{
     right: 5vh;
 }
-
 .button {
     display: inline-block;
     font-size: 18px;
@@ -71,35 +68,12 @@ form {
     color: #FF7E73;
     background: #ffffff;
 }
-
-.money {
+.money{
     text-align: center;
     color: #fff;
     font-size: 25vh;
     font-weight: bold;
 }
-
 .money span {
     font-size: 10vh;
-}
-
-.success-msg {
-    width: 300px;
-    height: 40px;
-    line-height: 40px;
-    background-color: #29aba4;
-    color: #fff;
-    top: 100px;
-    left: 0;
-    right: 0;
-    margin: auto;
-    text-align: center;
-    border-radius: 5px;
-}
-.del{
-    opacity: 0;
-
-}
-.show{
-    opacity: 1;
 }

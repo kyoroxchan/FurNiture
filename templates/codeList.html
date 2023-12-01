@@ -15,26 +15,34 @@
         <p><a href="http://localhost:5000">FurNiture</a></p>
     </header>
     <h1>コード発行履歴</h1>
+    <div class="success-msg del">クリップボードにコピーしました</div>
     <div class="listArea">
         <table border="1">
             <tr>
-                <th style="width: 30%;">コード</th>
-                <th style="width: 20%;">価格</th>
+                <th style="width: 25%;">コード</th>
+                <th style="width: 15%;">価格</th>
                 <th style="width: 10%;">使用可否</th>
                 <th style="width: 20%;">発行日</th>
                 <th style="width: 20%;">使用日</th>
+                <th style="width: 10%;">コピー</th>
             </tr>
             {% for rec in result %}
             <tr>
                 <td>{{rec.code}}</td>
-                <td>{{money}}</td>
+                <td>{{money}}円</td>
                 <td>{{rec.usable}}</td>
                 <td>{{rec.issueday}}</td>
                 <td>{{rec.useday}}</td>
+                <td>
+                    <input class="tagText" type="text" value="{{rec.code}}" hidden readonly />
+                    <button class="copyButton">コピー</button>
+                </td>
             </tr>
             {% endfor %}
         </table>
     </div>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/clipboard.js"></script>
 </body>
 
 </html>

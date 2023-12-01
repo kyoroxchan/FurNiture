@@ -15,10 +15,14 @@
 <body>
     <header>
         <p><a href="http://localhost:5000">FurNiture</a></p>
+        <a class="button" href="http://localhost:5000/profileUp">プロフィール編集</a>
         <form action="/logout" method="post" class="logoutArea">
             <input type="submit" value="ログアウト" class="logoutBtn">
         </form>
     </header>
+    <div class="Gregister">
+        <a class="button" href="http://localhost:5000/GRegister">出品</a>
+    </div>
     <main>
         <div class="user">
             <div class="left">
@@ -38,8 +42,10 @@
                     <a class="button" href="http://localhost:5000/payment">コード使用</a>
                     <a class="button" href="http://localhost:5000/giftcode">コード発行</a>
                 </div>
-                <a class="button" href="http://localhost:5000/profileUp">プロフィール編集</a>
-                <a class="button" href="http://localhost:5000/GRegister">出品する</a>
+                <div class="doubleBtn">
+                    <a class="button" href="http://localhost:5000/favoriteList">お気に入り</a>
+                    <a class="button iframe-open" href="http://localhost:5000/history">購入履歴</a>
+                </div>
             </div>
         </div>
 

@@ -58,7 +58,25 @@
                         </a>
                     </div>
                     {% endfor %}
-                    <p class="nextArea"><a href="http://localhost:5000/order" class="next">購入</a></p>
+                    <div class="doubleBtn">
+                        <a href="http://localhost:5000/order" class="next">購入</a>
+                        {% for rec in result %}
+                        {% if toggle == 'on' %}
+                        <form action="/favorite/off" method="get">
+                            <input type="submit" value="★" class="button">
+                        </form>
+                        <!-- <a href="http://localhost:5000/detail/{{ rec['gid']}}" class="button">★</a> -->
+                        {% else %}
+                        <form action="/favorite/on" method="get">
+                            <input type="submit" value="☆" class="button">
+                        </form>
+
+                        <!-- <a href="http://localhost:5000/detail/{{ rec['gid']}}" class="button">☆</a> -->
+                        {% endif %}
+                        {% endfor %}
+
+                    </div>
+
                 </div>
             </div>
         </div>

@@ -372,7 +372,7 @@ def profile():
     return render_template("profileUpComplete.html", res=res)
 
 
-# 残高追加-------------------------------------------------------------------------------------------
+# コード使用-------------------------------------------------------------------------------------------
 @app.route("/payment", methods=["GET"])
 def payment():
     res = {}
@@ -427,6 +427,8 @@ def paymentComplete():
     sql = (
         'UPDATE prepaid SET usable = "no",useday ="'
         + day
+        + '",user ="'
+        + res["mail"]
         + '" WHERE CODE = "'
         + code
         + '";'
@@ -692,19 +694,24 @@ def GRegisterCheck():
     session["price"] = result["price"]
     session["info"] = result["info"]
 
-    if result["category"] =="table":
-        cate= "テーブル"
-    elif result["category"] =="chair":
-        cate= "椅子"
-    elif result["category"] =="tools":
-        cate= "工具"
-    elif result["category"] =="material":
-        cate= "素材"
-    elif result["category"] =="other":
-        cate= "その他"
+    if result["category"] == "table":
+        cate = "テーブル"
+    elif result["category"] == "chair":
+        cate = "椅子"
+    elif result["category"] == "tools":
+        cate = "工具"
+    elif result["category"] == "material":
+        cate = "素材"
+    elif result["category"] == "other":
+        cate = "その他"
 
     return render_template(
-        "GRegisterCheck.html", result=result, vtbl=vtbl, res=res, images=images,cate=cate
+        "GRegisterCheck.html",
+        result=result,
+        vtbl=vtbl,
+        res=res,
+        images=images,
+        cate=cate,
     )
 
 
@@ -1694,11 +1701,116 @@ def adminMoney():
 
 @app.route("/adminPrepaid", methods=["GET"])
 def adminPrepaid():
-    sql = "SELECT * FROM prepaid;"
+    session.pop("code", None)
+
+    sql = "SELECT * FROM prepaid ORDER BY issueday DESC;"
 
     result = select(sql)
 
-    return render_template("adminPrepaid.html", result)
+    return render_template("adminPrepaid.html", result=result)
+
+
+@app.route("/adminPrepaidAdd", methods=["POST"])
+def adminPrepaidAdd():
+    session.pop("code", None)
+    sql = "SELECT * FROM masaru WHERE mid=1;"
+
+    result = select(sql)
+    for rec in result:
+        money = rec["money"]
+    money = f"{money:,}"
+
+    return render_template("adminPrepaidAdd.html", result=result, money=money)
+
+
+@app.route("/adminPrepaidAddComplete", methods=["POST"])
+def adminPrepaidAddComplete():
+    res = {}
+
+    if "code" in session:
+        sql = "SELECT * FROM masaru WHERE mid=1;"
+
+        result = select(sql)
+        for rec in result:
+            money = rec["money"]
+        money = f"{money:,}"
+        session.pop("code", None)
+        return render_template("adminPrepaidAdd.html", result=result, money=money)
+
+    price = int(request.form["price"])
+    sql = "SELECT money FROM masaru WHERE mid = 1;"
+
+    result = select(sql)
+    for rec in result:
+        money = rec["money"]
+    if price > money:
+        err = "金額が足りません"
+        sql = "SELECT * FROM masaru WHERE mid=1;"
+
+        result = select(sql)
+        for rec in result:
+            money = rec["money"]
+        money = f"{money:,}"
+        session.pop("code", None)
+        return render_template(
+            "adminPrepaidAdd.html", result=result, money=money, err=err
+        )
+
+    sumMoney = int(money) - int(price)
+    sql = 'UPDATE masaru SET money = "' + str(sumMoney) + '" WHERE mid =1;'
+
+    print(sql)
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        con.commit()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    rNum = generate_random_string()
+    print(rNum)
+    day = datetime.now().strftime("%Y%m%d")
+    print(day)
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        sql = """
+    INSERT INTO prepaid 
+        (code,money,issueday,mail)
+    VALUES 
+        (%s, %s, %s, %s)
+    """
+        data = [(rNum, price, day, "masaru")]
+        cur.executemany(sql, data)
+        con.commit()
+
+        print("データベース追加完了")
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    session["code"] = rNum
+    return render_template(
+        "adminPrepaidComplete.html", res=res, rNum=rNum, sumMoney=sumMoney, price=price
+    )
 
 
 # チャット-------------------------------------------------------------------------------------------
@@ -1720,7 +1832,14 @@ def chat(gid):
         gmail = rec["mail"]
         chatday = rec["chatday"]
         chatday2 = rec["chatday2"]
-    return render_template("chat.html", chat=chat,chatday=chatday,chatday2=chatday2, mail=mail, gmail=gmail)
+    return render_template(
+        "chat.html",
+        chat=chat,
+        chatday=chatday,
+        chatday2=chatday2,
+        mail=mail,
+        gmail=gmail,
+    )
 
 
 @app.route("/chat/shipment", methods=["GET"])
@@ -1731,7 +1850,7 @@ def shipment():
     result = select(sql)
     for rec in result:
         chat = rec["chat"]
-            
+
     day = datetime.now().strftime("%Y_%m_%d")
 
     sql = (
@@ -1766,7 +1885,7 @@ def shipment():
     for rec in result:
         chat = rec["chat"]
         gmail = rec["mail"]
-    return render_template("chat.html", chat=chat,day=day, mail=mail, gmail=gmail)
+    return render_template("chat.html", chat=chat, day=day, mail=mail, gmail=gmail)
 
 
 @app.route("/chat/receipt", methods=["GET"])
@@ -1780,7 +1899,6 @@ def receipt():
         chatday = rec["chatday"]
 
     day = datetime.now().strftime("%Y_%m_%d")
-
 
     sql = (
         'UPDATE goods SET chat = "receipt",chatday2="'
@@ -1814,7 +1932,9 @@ def receipt():
     for rec in result:
         chat = rec["chat"]
         gmail = rec["mail"]
-    return render_template("chat.html", chat=chat,chatday=chatday, day=day, mail=mail, gmail=gmail)
+    return render_template(
+        "chat.html", chat=chat, chatday=chatday, day=day, mail=mail, gmail=gmail
+    )
 
 
 # DB接続-------------------------------------------------------------------------------------------

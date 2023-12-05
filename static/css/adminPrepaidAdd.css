@@ -7,17 +7,18 @@ body {
 main {
     text-align: center;
     width: 60vh;
-    height: 60vh;
+    height: 35vh;
     background: rgba(255, 255, 255, 0.697);
     position: absolute;
     top: 50%;
     left: 50%;
-    margin: 20vh 0 0 -30vh;
+    margin: 25vh 0 0 -30vh;
     padding: 1vh;
 }
 
 h1{
     margin: 0 ;
+    padding: 3vh 0 1vh 0;
 }
 .texttitle{
     height: 5vh;
@@ -49,4 +50,7 @@ h1{
 .button:hover {
     color: #FF7E73;
     background: #ffffff;
+}
+h2{
+    margin: 0;
 }

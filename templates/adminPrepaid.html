@@ -15,20 +15,29 @@
         <form action="/administrator" method="post" class="b1">
             <input type="submit" value="戻る" class="button">
         </form>
+        <form action="/adminPrepaidAdd" method="post" class="b2">
+            <input type="submit" value="追加" class="button">
+        </form>
         <div class="listArea">
-            <table border="1" style="width: 200vw;">
+            <table border="1" style="width: 100vw;">
                 <tr>
-                    <th>ID</th>
-                    <th>使用可/不可</th>
-                    <th>料金</th>
-                    <th>コード</th>
+                    <th style="width: 10%;">コード</th>
+                    <th style="width: 10%;">料金</th>
+                    <th style="width: 5%;">使用可/不可</th>
+                    <th style="width: 10%;">発行日</th>
+                    <th style="width: 20%;">発行者</th>
+                    <th style="width: 10%;">使用日</th>
+                    <th style="width: 20%;">使用者</th>
                 </tr>
                 {% for rec in result %}
                 <tr>
-                    <td>{{rec.id}}</td>
-                    <td>{{rec.usable}}</td>
-                    <td>{{rec.money}}</td>
                     <td>{{rec.code}}</td>
+                    <td>{{rec.money}}</td>
+                    <td>{{rec.usable}}</td>
+                    <td>{{rec.issueday}}</td>
+                    <td>{{rec.mail}}</td>
+                    <td>{{rec.useday}}</td>
+                    <td>{{rec.user}}</td>
                 </tr>
                 {% endfor %}
             </table>

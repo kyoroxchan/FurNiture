@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>管理者ページ</title>
+    <link rel="stylesheet" href="/static/css/adminPrepaidAdd.css">
+    <link rel="icon" type="image/png" href="/static/images/material/logo.png">
+</head>
+
+<body>
+    <main>
+        <form action="adminPrepaidAddComplete" class="wrapper" method="post">
+            <h1>プリペイドコード発行</h1>
+            <div class="first">
+                <h2>残高：{{money}}</h2>
+                <p class="textArea">
+                    <label>価格</label>
+                    <input type="number" name="price" class="texttitle" maxlength="9">
+                <p class="box">
+                    <input type="submit" value="追加" class="button">
+                </p>
+            </div>
+        </form>
+    </main>
+</body>
+
+</html>

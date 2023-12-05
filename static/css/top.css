@@ -105,12 +105,14 @@ main {
 
 /* -------------------------------- */
 .category {
-    z-index: 10;
+    z-index: 1;
     width: 12vw;
-    height: 20vh;
+    height: 300px;
     position: sticky;
     top: 8vh;
     left: 0;
+    /* overflow: hidden;
+    background-color: #FF7E73; */
 }
 
 
@@ -123,7 +125,6 @@ main {
     cursor: pointer;
     transition: all 0.3s;
 }
-
 .filter-list li.is-active {
     background: #333;
     color: #fff;

@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>商品ページ</title>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/css/modaal.min.css">
     <link rel="stylesheet" href="/static/css/navLogin.css">
     <link rel="stylesheet" href="../static/css/detailLoginSale.css">
 
@@ -57,6 +59,8 @@
                             <p>{{user['nick']}}</p>
                         </div>
                     </div>
+                    <p class="nextArea"><a class="button iframe-open" href="http://localhost:5000/chatcheck">チャット</a>
+                    </p>
                     {% endfor %}
                     {% else %}
                     {% for user in userP %}
@@ -71,12 +75,10 @@
                             </div>
                         </a>
                     </div>
+                    <p class="nextArea"><a href="#" class="next">売り切れました</a></p>
                     {% endfor %}
                     {% endif %}
 
-
-
-                    <p class="nextArea"><a href="#" class="next">売り切れました</a></p>
                 </div>
             </div>
         </div>
@@ -98,6 +100,10 @@
             </ul>
         </div>
     </section>
+    <script src="/static/js/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.4/js/modaal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vivus/0.4.4/vivus.min.js"></script>
+    <script src="/static/js/topLogin.js"></script>
 </body>
 
 </html>

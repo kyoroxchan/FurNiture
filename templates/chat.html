@@ -1,11 +1,86 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>チャット</title>
+    <link rel="stylesheet" href="/static/css/chat.css">
+    <link rel="stylesheet" href="/static/css/navLogin.css">
 </head>
+
 <body>
-    
+    <header>
+        <p><a href="http://localhost:5000">FurNiture</a></p>
+    </header>
+    <main>
+        {% if chat == 'no' %}
+        <p class="text">まだ発送されていません</p>
+        {% elif chat== 'shipment' %}
+        <div class="line-bc">
+            <div class="balloon">
+                <div class="chatting">
+                    <div class="says">
+                        <p class="seller">発送しました</p>
+                    </div>
+                    <div class="dayArea">
+                        <p class="day">{{chatday}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% elif chat== 'receipt' %}
+        <div class="line-bc">
+            <div class="balloon">
+                <div class="chatting">
+                    <div class="says">
+                        <p class="seller">発送しました</p>
+                    </div>
+                    <div class="dayArea">
+                        <p class="day">{{chatday}}</p>
+                    </div>
+                </div>
+
+                <div class="balloon2">
+                    <div class="dayArea">
+                        <p class="day2">{{chatday2}}</p>
+                    </div>
+                    <div class="mycomment">
+                        <p class="buyer">受け取りました</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {% endif %}
+        <div class="btnArea">
+            {% if gmail == mail %}
+            {% if chat == 'no' %}
+            <form action="/chat/shipment">
+                <input type="submit" value="発送完了" class="button">
+            </form>
+            {% elif chat == 'shipment' %}
+            <p class="text">発送完了しています</p>
+            {% else %}
+            <p class="text">取引が完了しました</p>
+            {% endif %}
+
+            {% else %}
+            {% if chat == 'no' %}
+            <p class="text">発送をお待ちください</p>
+            {% elif chat == 'shipment' %}
+            <form action="/chat/receipt">
+                <input type="submit" value="受取完了" class="button">
+            </form>
+            {% else %}
+            <p class="text">取引が完了しました</p>
+            {% endif %}
+
+            {% endif %}
+        </div>
+    </main>
 </body>
+
 </html>

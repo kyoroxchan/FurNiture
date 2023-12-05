@@ -205,6 +205,7 @@ def checkMail():
 
 @app.route("/user", methods=["GET"])
 def user():
+    session.pop("gid", None)
     session.pop("code", None)
     sql = 'SELECT * FROM goods WHERE mail ="' + session["mail"] + '";'
 
@@ -586,21 +587,30 @@ def history():
 
     return render_template("history.html", res=res, result=result)
 
+
 # お気に入りリスト-------------------------------------------------------------------------------------------
 @app.route("/favoriteList", methods=["GET"])
 def favoriteList():
     res = {}
     mail = session["mail"]
-    sql = "SELECT goods.gid,goods.photo,goods.name,goods.price,goods.info FROM goods JOIN favorite ON goods.gid = favorite.gid WHERE favorite.mail = '" + mail + "' ORDER BY gid DESC;"
+    sql = (
+        "SELECT goods.gid,goods.photo,goods.name,goods.price,goods.info FROM goods JOIN favorite ON goods.gid = favorite.gid WHERE favorite.mail = '"
+        + mail
+        + "' ORDER BY gid DESC;"
+    )
 
     result = select(sql)
     if result:
         for rec in result:
             price = rec["price"]
             price = f"{price:,}"
-            return render_template("favoriteList.html", res=res, result=result, price=price)
+            return render_template(
+                "favoriteList.html", res=res, result=result, price=price
+            )
 
     return render_template("favoriteList.html", res=res, result=result)
+
+
 # 商品登録-------------------------------------------------------------------------------------------
 
 
@@ -682,8 +692,19 @@ def GRegisterCheck():
     session["price"] = result["price"]
     session["info"] = result["info"]
 
+    if result["category"] =="table":
+        cate= "テーブル"
+    elif result["category"] =="chair":
+        cate= "椅子"
+    elif result["category"] =="tools":
+        cate= "工具"
+    elif result["category"] =="material":
+        cate= "素材"
+    elif result["category"] =="other":
+        cate= "その他"
+
     return render_template(
-        "GRegisterCheck.html", result=result, vtbl=vtbl, res=res, images=images
+        "GRegisterCheck.html", result=result, vtbl=vtbl, res=res, images=images,cate=cate
     )
 
 
@@ -949,7 +970,13 @@ def favorite(fa):
         try:
             con = con_db()
             cur = con.cursor(dictionary=True)
-            sql = "DELETE FROM favorite WHERE mail = '"+ uMail+ "' AND gid = '"+ gid+ "';"
+            sql = (
+                "DELETE FROM favorite WHERE mail = '"
+                + uMail
+                + "' AND gid = '"
+                + gid
+                + "';"
+            )
             cur.execute(sql)
             con.commit()
 
@@ -1395,7 +1422,7 @@ def orderComplete():
         cur.close()
         con.close()
 
-    sql = 'UPDATE masaru SET money = "' + str(masaruMoney) + '" WHERE id = "1";'
+    sql = 'UPDATE masaru SET money = "' + str(masaruMoney) + '" WHERE mid = "1";'
     print(sql)
     try:
         con = con_db()
@@ -1672,6 +1699,122 @@ def adminPrepaid():
     result = select(sql)
 
     return render_template("adminPrepaid.html", result)
+
+
+# チャット-------------------------------------------------------------------------------------------
+@app.route("/chatcheck", methods=["GET"])
+def chatcheck():
+    gid = session["gid"]
+    return render_template("chatcheck.html", gid=gid)
+
+
+@app.route("/chat/<gid>", methods=["GET"])
+def chat(gid):
+    mail = session["mail"]
+    session["gid"] = gid
+    sql = "SELECT * FROM goods WHERE gid = '" + gid + "';"
+
+    result = select(sql)
+    for rec in result:
+        chat = rec["chat"]
+        gmail = rec["mail"]
+        chatday = rec["chatday"]
+        chatday2 = rec["chatday2"]
+    return render_template("chat.html", chat=chat,chatday=chatday,chatday2=chatday2, mail=mail, gmail=gmail)
+
+
+@app.route("/chat/shipment", methods=["GET"])
+def shipment():
+    gid = session["gid"]
+
+    sql = "SELECT * FROM goods WHERE gid = '" + gid + "';"
+    result = select(sql)
+    for rec in result:
+        chat = rec["chat"]
+            
+    day = datetime.now().strftime("%Y_%m_%d")
+
+    sql = (
+        'UPDATE goods SET chat = "shipment",chatday="'
+        + day
+        + '" WHERE gid = "'
+        + gid
+        + '";'
+    )
+    print(sql)
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        con.commit()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    mail = session["mail"]
+    sql = "SELECT * FROM goods WHERE gid = '" + gid + "';"
+
+    result = select(sql)
+    for rec in result:
+        chat = rec["chat"]
+        gmail = rec["mail"]
+    return render_template("chat.html", chat=chat,day=day, mail=mail, gmail=gmail)
+
+
+@app.route("/chat/receipt", methods=["GET"])
+def receipt():
+    gid = session["gid"]
+
+    sql = "SELECT * FROM goods WHERE gid = '" + gid + "';"
+    result = select(sql)
+    for rec in result:
+        chat = rec["chat"]
+        chatday = rec["chatday"]
+
+    day = datetime.now().strftime("%Y_%m_%d")
+
+
+    sql = (
+        'UPDATE goods SET chat = "receipt",chatday2="'
+        + day
+        + '" WHERE gid = "'
+        + gid
+        + '";'
+    )
+    print(sql)
+    try:
+        con = con_db()
+        cur = con.cursor(dictionary=True)
+        cur.execute(sql)
+        con.commit()
+    except mysql.connector.errors.ProgrammingError as e:
+        print("***DB接続エラー***")
+        print(type(e))
+        print(e)
+    except Exception as e:
+        print("***システム運行プログラムエラー***")
+        print(type(e))
+        print(e)
+    finally:
+        cur.close()
+        con.close()
+
+    mail = session["mail"]
+    sql = "SELECT * FROM goods WHERE gid = '" + gid + "';"
+
+    result = select(sql)
+    for rec in result:
+        chat = rec["chat"]
+        gmail = rec["mail"]
+    return render_template("chat.html", chat=chat,chatday=chatday, day=day, mail=mail, gmail=gmail)
 
 
 # DB接続-------------------------------------------------------------------------------------------

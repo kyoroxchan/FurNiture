@@ -1,6 +1,6 @@
 body {
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 
@@ -35,11 +35,6 @@ td{
 
 img {
     height: 16vh;
-}
-form{
-    position: absolute;
-    z-index: 1;
-    top: 2vh;
 }
 
 .b1{

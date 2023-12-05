@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>エラー</title>
+    <title>チャット開始</title>
     <link rel="stylesheet" href="/static/css/profileUpComplete.css">
     <link rel="stylesheet" href="/static/css/nav.css">
     <link rel="icon" type="image/png" href="/static/images/material/logo.png">
@@ -16,9 +16,9 @@
     </header>
 
     <main>
-        <h1>{{err}}</h1>
-        <form action="/" method="get">
-            <input type="submit" value="TOPへ" class="button">
+        <h1>チャットを開始します</h1>
+        <form action="/chat/{{gid}}" method="get">
+            <input type="submit" value="はい" class="button">
         </form>
     </main>
 </body>

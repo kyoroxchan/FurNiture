@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+    --hover-clr: #6d6d6d;
+}
+
+body {
+    overflow: hidden;
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+}
+
+
+
+/* main------------------------------------------------------------------------------------------- */
+
+.btnArea {
+    position: absolute;
+    height: 10vh;
+    width: 100vw;
+    background: white;
+    bottom: 0;
+    border-top: 1px solid black;
+}
+
+.btnArea form {
+    margin-right: 4vh;
+    line-height: 10vh;
+    width: 30vh;
+    margin: 0 auto;
+}
+
+.text {
+    text-align: center;
+    line-height: 10vh;
+}
+
+.button {
+    display: inline-block;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    width: 30vh;
+    height: 8vh;
+    padding: 8px 33px;
+    background: #FF7E73;
+    color: #ffffff;
+    line-height: 1em;
+    transition: .3s;
+    border: 2px solid #FF7E73;
+    margin-top: 1vh;
+    border-radius: 50px;
+}
+
+.button:hover {
+    color: #FF7E73;
+    background: #ffffff;
+}
+
+.line-bc {
+    padding: 20px 10px;
+    max-width: 800px;
+    margin: 15px auto;
+    text-align: right;
+    font-size: 14px;
+    /* background: #7da4cd; */
+
+}
+
+/*以下、②左側のコメント*/
+.balloon {
+    width: 100%;
+    margin: 10px 0;
+    overflow: hidden;
+    font-size: 30px;
+}
+
+
+.balloon .chatting {
+    width: 100%;
+    text-align: left;
+    display: flex;
+    position: relative;
+    align-items: flex-end;
+}
+.day{
+    font-size: .5em;
+}
+.day2{
+    font-size: .5em;
+    margin-bottom: 1vh;
+}
+.balloon2{
+    display: flex;
+    float: right;
+    align-items: flex-end;
+}
+
+
+.says {
+    display: inline-block;
+    position: relative;
+    margin: 0 0 0 10px;
+    padding: 10px;
+    max-width: 250px;
+    border-radius: 12px;
+    background: #ffffff;
+}
+
+.says:after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 3px;
+    left: -19px;
+    border: 8px solid transparent;
+    border-right: 18px solid #ffffff;
+    -webkit-transform: rotate(35deg);
+    transform: rotate(35deg);
+}
+
+.says p {
+    margin: 0;
+    padding: 0;
+}
+
+/*以下、③右側の緑コメント*/
+.mycomment {
+    margin: 10px 0;
+}
+
+.mycomment p {
+    display: inline-block;
+    position: relative;
+    margin: 0 10px 0 0;
+    padding: 8px;
+    max-width: 250px;
+    border-radius: 12px;
+    background: #FF7E73;
+    font-size: 30px;
+    color: #fff;
+}
+
+.mycomment p:after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    right: -19px;
+    border: 8px solid transparent;
+    border-left: 18px solid #FF7E73;
+    -webkit-transform: rotate(-35deg);
+    transform: rotate(-35deg);
+}

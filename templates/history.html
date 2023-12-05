@@ -30,7 +30,11 @@
                 <td>{{rec.name}}</td>
                 <td>{{price}}円</td>
                 <td>{{rec.purchaseday}}</td>
-                <td>チャット</td>
+                <td>
+                    <form action="/chat/{{rec.gid}}">
+                        <input type="submit" value="チャット">
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </table>

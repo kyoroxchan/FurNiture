@@ -7,11 +7,24 @@ from werkzeug.utils import secure_filename
 import os
 import random
 import string
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 app.secret_key = "心がカギ"
 app.permanent_session_lifetime = timedelta(hours=24)
 app.config["MAX_CONTENT_LENGTH"] = 8**20
+
+
+# Gmailの設定
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USE_SSL"] = False
+app.config["MAIL_USERNAME"] = "furniture.masaru@gmail.com"
+app.config["MAIL_PASSWORD"] = "ydzd jida lstw hjki"
+app.config["MAIL_DEFAULT_SENDER"] = "furniture.masaru@gmail.com"
+
+mail = Mail(app)
 
 # TOP-------------------------------------------------------------------------------------------
 
@@ -195,9 +208,26 @@ def checkMail():
         cur.close()
         con.close()
 
-    session.clear()
+    to_email = result["mail"]
+    subject = "FurNiture会員登録確認メール"
 
+    # 画像を "static" フォルダ内に保存しておく
+    img_path ="./static/furniture_mail.jpg"
+
+    body = render_template("email_template.html", img_path=img_path)
+
+    message = Message(subject=subject, recipients=[to_email], html=body)
+
+    mail.send(message)
+
+    session.clear()
     return render_template("checkMail.html", result=result)
+
+
+# メール確認-------------------------------------------------------------------------------------------
+@app.route("/checkMailComplete", methods=["GET"])
+def checkMailComplete():
+    return render_template("checkMailComplete.html")
 
 
 # ユーザー-------------------------------------------------------------------------------------------

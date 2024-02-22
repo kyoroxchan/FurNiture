@@ -2,5 +2,3 @@
 furniture.ohs11
 
 takashi@gmail.com
-
-

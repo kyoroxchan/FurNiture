@@ -212,7 +212,7 @@ def checkMail():
     subject = "FurNiture会員登録確認メール"
 
     # 画像を "static" フォルダ内に保存しておく
-    img_path ="./static/furniture_mail.jpg"
+    img_path = "./static/furniture_mail.jpg"
 
     body = render_template("email_template.html", img_path=img_path)
 
@@ -2037,17 +2037,27 @@ def generate_random_string():
     random_string = "".join(random.choice(characters) for _ in range(9))
     return random_string
 
+
 # HTTPステータスエラー
 @app.errorhandler(404)
 def error404(error):
-    errmsg = {"code": error.code, "title": "HTTPステータスコード", "msg": "指定されたページが見つかりません"}
+    errmsg = {
+        "code": error.code,
+        "title": "HTTPステータスコード",
+        "msg": "指定されたページが見つかりません",
+    }
     return render_template("error.html", errmsg=errmsg), 404
 
 
 @app.errorhandler(500)
 def error500(error):
-    errmsg = {"code": error.code, "title": "HTTPステータスコード", "msg": "指定されたページが見つかりません"}
+    errmsg = {
+        "code": error.code,
+        "title": "HTTPステータスコード",
+        "msg": "指定されたページが見つかりません",
+    }
     return render_template("error.html", errmsg=errmsg), 500
+
 
 @app.errorhandler(413)
 def error413(error):
